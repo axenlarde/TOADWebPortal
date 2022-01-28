@@ -1,0 +1,29 @@
+<!--
+File used to list the tags and their priority
+-->
+<prioritytag>
+	<tag1>
+		<name>VIP</name>
+		<priority>3</priority>
+		<openinghours></openinghours>
+		<publicholiday></publicholiday>
+		<closureprompt></closureprompt>
+		<greetingprompt></greetingprompt>
+	</tag1>
+	<tag2>
+		<name>VRP</name>
+		<priority>2</priority>
+		<openinghours></openinghours>
+		<publicholiday></publicholiday>
+		<closureprompt></closureprompt>
+		<greetingprompt></greetingprompt>
+	</tag2>
+	<defaulttag>
+		<name>Normal</name>
+		<priority>1</priority>
+		<openinghours></openinghours>
+		<publicholiday></publicholiday>
+		<closureprompt></closureprompt>
+		<greetingprompt></greetingprompt>
+	</defaulttag>
+</prioritytag>
