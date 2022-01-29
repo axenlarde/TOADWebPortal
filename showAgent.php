@@ -4,8 +4,7 @@ include "sessionFound.php";
 
 $urlToReturn = "Location: mainpage.php?page=manageAgent";
 
-$userID = $_GET["id"];
-$techGuy;
+$userID = $_GET["userID"];
 
 if(isset($userID))
 	{
@@ -93,6 +92,22 @@ else
 						<td>Team : </td>
 						<td></td>
 						<td><?php echo $agent->team?></td>
+					</tr>
+					<tr>
+						<td>Superviseur primaire de : </td>
+						<td></td>
+						<td><?php echo $agent->primarysupervisorof->team?></td>
+					</tr>
+					<tr>
+						<td>Superviseur secondaire de : </td>
+						<td></td>
+						<td><?php 
+						foreach ($agent->secondarysupervisorof->team as $team)
+						  {
+						  echo $team.' ';
+						  }
+						?>
+						</td>
 					</tr>
 					<?php
 						foreach($agent->skills->skill as $skill)

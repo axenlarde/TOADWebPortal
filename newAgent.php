@@ -21,6 +21,20 @@ function checkNewInput(form)
 		}
 	}
 	
+function hide()
+	{
+	if(document.getElementById("agenttype").value == "agent")
+		{
+		document.getElementById("primarysupervisor").style.display="none";
+		document.getElementById("secondarysupervisor").style.display="none";
+		}
+	else
+		{
+		document.getElementById("primarysupervisor").style.display="block";
+		document.getElementById("secondarysupervisor").style.display="block";
+		}
+	}
+	
 function addNewRow()
 	{
 	var myTable = document.getElementById("userForm");
@@ -41,6 +55,7 @@ function addNewRow()
 /**
  * A simple form to get the informations to create an Agent
  */
+$searchContent = $_GET["search"];
 
 /**
  * We get the available teams from the server
@@ -74,7 +89,11 @@ if($respTeam === false)
 $teamSearchResult = simplexml_load_string($respTeam);
 $teamCount = count($teamSearchResult->reply->content->teams->team);
 
-if($teamCount == 0);//do something
+if($teamCount == 0)
+    {
+    header('Location: mainpage.php?page=branchMainAdmin&message=generalerror');
+    exit;
+    }
 
 /**
  * We get the available skills from the server
@@ -109,7 +128,11 @@ if($respSkill === false)
 $skillSearchResult = simplexml_load_string($respSkill);
 $skillCount = count($skillSearchResult->reply->content->skills->skill);
 
-if($skillCount == 0);//do something
+if($skillCount == 0)
+    {
+    header('Location: mainpage.php?page=branchMainAdmin&message=generalerror');
+    exit;
+    }
 ?>
 
 <h3>
@@ -153,16 +176,16 @@ if($skillCount == 0);//do something
 					<tr>
 						<td>Type : </td>
 						<td>
-							<select name ="agenttype" id="agenttype">
+							<select name ="agenttype" id="agenttype" onchange="hide()">
 								<option value="agent" selected="selected">Agent</option>
 								<option value="supervisor">Superviseur</option>
 							</select>
 						</td>
 					</tr>
-					<tr>
+					<tr id="primarysupervisor">
 						<td>Superviseur principal de : </td>
 						<td>
-							<select name="primarysupervisorof" id="primarysupervisorof">
+							<select name="primarysupervisorof" id="primarysupervisorof" multiple>
     						<?php
     						foreach($teamSearchResult->reply->content->teams->team as $team)
                                 {
@@ -172,7 +195,7 @@ if($skillCount == 0);//do something
                         	</select>
 						</td>
 					</tr>
-					<tr>
+					<tr id="secondarysupervisor">
 						<td>Superviseur secondaire de : </td>
 						<td>
 							<select name="secondarysupervisorof" id="secondarysupervisorof" multiple>

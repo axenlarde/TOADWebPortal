@@ -17,7 +17,6 @@ setTimeout(function(){window.location.reload(1);}, 5000);
 $urlToReturn = "Location: mainpage.php?page=branchMainAdmin";
 
 $taskID = @$_GET["taskID"];
-$task;
 
 //We contact the server to get the task data
 $request = '<xml>
