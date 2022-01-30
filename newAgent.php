@@ -55,7 +55,6 @@ function addNewRow()
 /**
  * A simple form to get the informations to create an Agent
  */
-$searchContent = $_GET["search"];
 
 /**
  * We get the available teams from the server

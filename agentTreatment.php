@@ -32,7 +32,7 @@ if((isset($_GET["action"])) && ($_GET["action"] == "add"))
 	$skill4 = $_POST["skill4"];
 	$level4 = $_POST["level4"];
 	
-	//We prepare the update request
+	//We prepare the addAgent request
 	$request = "<xml>
 					<request>
 						<type>addAgent</type>
@@ -51,60 +51,50 @@ if((isset($_GET["action"])) && ($_GET["action"] == "add"))
 		{
 		foreach($primarysupervisorof as $teamName)
 		   {
-		    $request += "                  <team>".$teamName."</team>";
+		    $request .= "                  <team>".$teamName."</team>";
 		   }
 		}
-   $request += "
+   $request .= "
                                 </primarysupervisorof>
 								<secondarysupervisorof>";
    if($agenttype == "supervisor")
 		{
 		foreach($secondarysupervisorof as $teamName)
 		   {
-		   $request += "                   <team>".$teamName."</team>";
+		   $request .= "                   <team>".$teamName."</team>";
 		   }
 		}
-	$request += "
+	$request .= "
                                 </secondarysupervisorof>
                                 <skills>
                                     <skill>
                                         <name>".$skill1."</name>
                                         <level>".$level1."</level>
-                                    <skill>
-
-";
-	if(isset($skill2))
+                                    </skill>";
+	if(isset($skill2) && ($skill2 != "noSkill"))
 	   {
-       $request += "
-                                    <skill>
+       $request .= "                                    <skill>
                                         <name>".$skill2."</name>
                                         <level>".$level2."</level>
-                                    <skill>
-        ";
+                                    </skill>";
 	   }
-   if(isset($skill3))
+   if(isset($skill3) && ($skill3 != "noSkill"))
 	   {
-       $request += "
-                                    <skill>
+       $request .= "                                    <skill>
                                         <name>".$skill3."</name>
                                         <level>".$level3."</level>
-                                    <skill>
-        ";
+                                    </skill>";
 	   }
-   if(isset($skill4))
+   if(isset($skill4) && ($skill4 != "noSkill"))
 	   {
-	       $request += "
-                                    <skill>
+	       $request .= "                                    <skill>
                                         <name>".$skill4."</name>
                                         <level>".$level4."</level>
-                                    <skill>
-        ";
+                                    </skill>";
 	   }
 	
 	
-	$request += "
-                                
-								</skills>
+	$request .= "						</skills>
 							</agent>
 						</content>
 					</request>
@@ -123,7 +113,7 @@ if((isset($_GET["action"])) && ($_GET["action"] == "add"))
 	
 	//Parse the response to get the taskID
 	$taskID = parseReply($resp);
-	$urlToReturn += $urlToReturn."&taskID=".$taskID;
+	$urlToReturn .= $urlToReturn."&taskID=".$taskID;
 	}
 else if((isset($_GET["action"])) && ($_GET["action"] == "delete"))
 	{
@@ -199,59 +189,59 @@ else if((isset($_GET["action"])) && ($_GET["action"] == "update"))
 	    	{
 		    foreach($primarysupervisorof as $teamName)
 		    	{
-		        $request += "                  <team>".$teamName."</team>";
+		        $request .= "                  <team>".$teamName."</team>";
 		    	}
 	    	}
-	    $request += "
+	    $request .= "
                                 </primarysupervisorof>
 								<secondarysupervisorof>";
 	    if($agenttype == "supervisor")
 	    	{
 	    	foreach($secondarysupervisorof as $teamName)
 	    		{
-	        	$request += "                   <team>".$teamName."</team>";
+	        	$request .= "                   <team>".$teamName."</team>";
 	    		}
 	    	}
 	    
-	    $request += "
+	    $request .= "
                                 </secondarysupervisorof>
                                 <skills>
                                     <skill>
                                         <name>".$skill1."</name>
                                         <level>".$level1."</level>
-                                    <skill>
+                                    </skill>
                                             
 ";
 	    if(isset($skill2))
 	    {
-	        $request += "
+	        $request .= "
                                     <skill>
                                         <name>".$skill2."</name>
                                         <level>".$level2."</level>
-                                    <skill>
+                                    </skill>
         ";
 	    }
 	    if(isset($skill3))
 	    {
-	        $request += "
+	        $request .= "
                                     <skill>
                                         <name>".$skill3."</name>
                                         <level>".$level3."</level>
-                                    <skill>
+                                    </skill>
         ";
 	    }
 	    if(isset($skill4))
 	    {
-	        $request += "
+	        $request .= "
                                     <skill>
                                         <name>".$skill4."</name>
                                         <level>".$level4."</level>
-                                    <skill>
+                                    </skill>
         ";
 	    }
 	    
 	    
-	    $request += "
+	    $request .= "
 	        
 								</skills>
 							</agent>
@@ -272,7 +262,7 @@ else if((isset($_GET["action"])) && ($_GET["action"] == "update"))
     
     //Parse the response to get the taskID
     $taskID = parseReply($resp);
-    $urlToReturn += $urlToReturn."&taskID=".$taskID;
+    $urlToReturn .= $urlToReturn."&taskID=".$taskID;
 	}
 
 /**
