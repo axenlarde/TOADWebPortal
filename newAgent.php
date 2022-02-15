@@ -21,20 +21,6 @@ function checkNewInput(form)
 		}
 	}
 	
-function hide()
-	{
-	if(document.getElementById("agenttype").value == "agent")
-		{
-		document.getElementById("primarysupervisor").style.display="none";
-		document.getElementById("secondarysupervisor").style.display="none";
-		}
-	else
-		{
-		document.getElementById("primarysupervisor").style.display="block";
-		document.getElementById("secondarysupervisor").style.display="block";
-		}
-	}
-	
 function addNewRow()
 	{
 	var myTable = document.getElementById("userForm");
@@ -132,6 +118,52 @@ if($skillCount == 0)
     header('Location: mainpage.php?page=branchMainAdmin&message=generalerror');
     exit;
     }
+    
+/**
+* We get the available User Creation Profile from the server
+*/
+$requestUCP = '<xml>
+			<request>
+				<type>listUCP</type>
+                <securitytoken>'.$_SESSION['securitytoken'].'</securitytoken>
+				<content>
+				</content>
+			</request>
+		</xml>';
+    
+$contextUCP = stream_context_create(
+  	array(
+   		'http' => array(
+   			'method' => 'POST',
+   			'header' => 'Content-type: text/xml',
+   			'content' => $requestUCP))
+   	);
+    
+$respUCP = @file_get_contents($url, FALSE, $contextUCP);
+    
+if($respUCP === false)
+    {
+  	header('Location: mainpage.php?page=branchMainAdmin&message=generalerror');
+   	exit;
+    }
+    
+//Finally we open the xml content as String
+$ucpSearchResult = simplexml_load_string($respUCP);
+$ucpCount = count($ucpSearchResult->reply->content->ucps->ucp);
+    
+if($ucpCount == 0)
+    {
+   	header('Location: mainpage.php?page=branchMainAdmin&message=generalerror');
+   	exit;
+    }
+    
+function getVerboseDesc($desc)
+    {
+    if($desc == "addAgent") return '<option value="'.$desc.'" selected="selected">Agent normal</option>';
+    else if($desc == "addRemoteAgent") return '<option value="'.$desc.'">Agent télétravail</option>';
+    
+    return '';
+    }
 ?>
 
 <h3>
@@ -152,6 +184,19 @@ if($skillCount == 0)
 			<td>
 				<table id="userForm">
 					<tr>
+						<td>Profile de création* : </td>
+						<td>
+							<select name="ucp" id="ucp">
+    						<?php
+    						foreach($ucpSearchResult->reply->content->ucps->ucp as $ucp)
+                                {
+                                echo getVerboseDesc($ucp->name);
+                                }
+                            ?>
+                        	</select>
+						</td>
+					</tr>
+					<tr>
 						<td>Team* : </td>
 						<td>
 							<select name="team" id="team">
@@ -165,6 +210,10 @@ if($skillCount == 0)
 						</td>
 					</tr>
 					<tr>
+						<td>UserID : </td>
+						<td><input type="text" name="userid" id="userid"></td>
+					</tr>
+					<tr>
 						<td>Nom* : </td>
 						<td><input type="text" name="lastname" id="lastname"></td>
 					</tr>
@@ -174,38 +223,11 @@ if($skillCount == 0)
 					</tr>
 					<tr>
 						<td>Type : </td>
-						<td>
-							<select name ="agenttype" id="agenttype" onchange="hide()">
-								<option value="agent" selected="selected">Agent</option>
-								<option value="supervisor">Superviseur</option>
-							</select>
-						</td>
+						<td>Agent</td>
 					</tr>
-					<tr id="primarysupervisor">
-						<td>Superviseur principal de : </td>
-						<td>
-							<select name="primarysupervisorof" id="primarysupervisorof" multiple>
-    						<?php
-    						foreach($teamSearchResult->reply->content->teams->team as $team)
-                                {
-    						    echo '<option value="'.$team.'">'.$team.'</option>';
-                                }
-                            ?>
-                        	</select>
-						</td>
-					</tr>
-					<tr id="secondarysupervisor">
-						<td>Superviseur secondaire de : </td>
-						<td>
-							<select name="secondarysupervisorof" id="secondarysupervisorof" multiple>
-    						<?php
-    						foreach($teamSearchResult->reply->content->teams->team as $team)
-                                {
-    						    echo '<option value="'.$team.'">'.$team.'</option>';
-                                }
-                            ?>
-                        	</select>
-						</td>
+					<tr>
+						<td>Numéro de la ligne : </td>
+						<td><input type="text" name="number" id="number"></td>
 					</tr>
 					<tr>
 						<td>MAC du téléphone : </td>
@@ -228,7 +250,7 @@ if($skillCount == 0)
 					</tr>
 					<tr>
 						<td>Connecter l'utilisateur au téléphone indiqué : </td>
-						<td><input type="checkbox" name="udplogin" id="udplogin" checked></td>
+						<td><input type="checkbox" name="udplogin" id="udplogin"></td>
 					</tr>
 					<tr>
 						<td>Skill 1* : </td>

@@ -9,7 +9,6 @@ $userID = $_GET["userID"];
 if(isset($userID))
 	{
 	//We contact the server to get the user data
-    $searchContent = $_GET["search"];
     $request = '<xml>
 			<request>
 				<type>getAgent</type>
@@ -65,42 +64,34 @@ else
 				<table id="techGuyForm">
 					<tr>
 						<td>UserID : </td>
-						<td></td>
 						<td><?php echo $agent->userid?></td>
 					</tr>
 					<tr>
 						<td>Prénom : </td>
-						<td></td>
 						<td><?php echo $agent->firstname?></td>
 					</tr>
 					<tr>
 						<td>Nom : </td>
-						<td></td>
 						<td><?php echo $agent->lastname?></td>
 					</tr>
 					<tr>
 						<td>Numéro : </td>
-						<td></td>
 						<td><?php echo $agent->number?></td>
 					</tr>
 					<tr>
 						<td>Type : </td>
-						<td></td>
 						<td><?php echo $agent->type?></td>
 					</tr>
 					<tr>
 						<td>Team : </td>
-						<td></td>
 						<td><?php echo $agent->team?></td>
 					</tr>
 					<tr>
 						<td>Superviseur primaire de : </td>
-						<td></td>
 						<td><?php echo $agent->primarysupervisorof->team?></td>
 					</tr>
 					<tr>
 						<td>Superviseur secondaire de : </td>
-						<td></td>
 						<td><?php 
 						foreach ($agent->secondarysupervisorof->team as $team)
 						  {
@@ -114,7 +105,6 @@ else
                             {
                             echo '<tr>
                                     <td>Skill</td>
-                                    <td></td>
                                     <td>'.$skill->name.':'.$skill->level.'</td>
                                   </tr>';
                             }
@@ -122,7 +112,6 @@ else
                             {
                             echo '<tr>
                                 <td>Terminal</td>
-                                <td></td>
                                 <td>'.$device->name.'</td>
                               </tr>';
                             }
@@ -130,7 +119,6 @@ else
                             {
                             echo '<tr>
                             <td>Profile mobile</td>
-                            <td></td>
                             <td>'.$udp->name.'</td>
                             </tr>';
                             }

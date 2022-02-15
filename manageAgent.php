@@ -1,14 +1,14 @@
 
 <script type="text/javascript">
 
-function updateItem(id, search)
+function updateItem(id)
 	{
-	window.location = "agentTreatment.php?action=update&userID="+id+"&search="+search;
+	window.location = "mainpage.php?page=updateAgent&userID="+id;
 	}
 
-function deleteItem(id, search)
+function deleteItem(id)
 	{
-	window.location = "agentTreatment.php?action=delete&userID="+id+"&search="+search;
+	window.location = "agentTreatment.php?action=delete&userID="+id;
 	}
 
 function showItem(id)
@@ -32,7 +32,7 @@ function searchOnKeyPress(event)
 	if (event.keyCode == 13 || event.which == 13)
 		{
 		var search = document.getElementById("search").value;
-		window.location = "mainpage.php?page=newTask&search="+search;
+		window.location = "mainpage.php?page=manageAgent&search="+search;
 		}
 	}
 
@@ -55,16 +55,28 @@ include "sessionFound.php";
  */
 //We contact the server to get the item list
 
-$lastSearch = "Rechercher..";
+$lastSearch;
 if(isset($_GET["search"]))
 	{
-	$searchContent = $_GET["search"];
+	$lastSearch = $_GET["search"];
+	$_SESSION['search'] = $_GET["search"];
+	}
+else
+	{
+	if(isset($_SESSION['search']))
+		{
+		$lastSearch = $_SESSION['search'];
+		}
+	}
+
+if(isset($lastSearch))
+	{
 	$request = '<xml>
 				<request>
 					<type>search</type>
                     <securitytoken>'.$_SESSION['securitytoken'].'</securitytoken>
 					<content>
-						<search>'.$searchContent.'</search>
+						<search>'.$lastSearch.'</search>
 					</content>
 				</request>
 			</xml>';
@@ -87,8 +99,10 @@ if(isset($_GET["search"]))
 	
 	//Finally we open the xml content as String
 	$searchResult = simplexml_load_string($resp);
-	
-	$lastSearch = $_GET["search"];
+	}
+else
+	{
+	$lastSearch = "Rechercher..";
 	}
 
 $MaxResult = 1200;
@@ -107,7 +121,7 @@ $MaxResult = 1200;
 
 <?php
 //We check if we ask for a research
-if(isset($_GET["search"]))
+if(isset($_SESSION['search']))
 	{
 	$AgentCount = count($searchResult->reply->content->agents->agent);
 	
@@ -122,8 +136,8 @@ if(isset($_GET["search"]))
 				<td><b>Prénom</b></td>
 				<td><b>Nom</b></td>
 				<td><b>Numéro</b></td>
-                <td><b>Team</b></td>
                 <td><b>Type</b></td>
+				<td><b>Team</b></td>
 			</tr>
 			';
 		
@@ -141,15 +155,15 @@ if(isset($_GET["search"]))
 			if(isset($agent))
 				{
 				echo '<tr>
-		 				<td><div class="forwarddate">'.$agent->userid.'</div></td>
-						<td><div class="forwarddate">'.$agent->firstname.'</div></td>
-						<td><div class="forwarddate">'.$agent->lastname.'</div></td>
-                        <td><div class="forwarddate">'.$agent->number.'</div></td>
-                        <td><div class="forwarddate">'.$agent->type.'</div></td>
-                        <td><div class="forwarddate">'.$agent->team.'</div></td>
-                        <td><div class="forwardaction"><input type="button" name="Detail" value="Detail" title="Detail" onclick="showItem(\''.$agent->userid.'\',\''.$_GET['search'].'\')"></div></td>
-                        <td><div class="forwardaction"><input type="button" name="Update" value="Modifier" title="Update" onclick="updateItem(\''.$agent->userid.'\',\''.$_GET['search'].'\')"></div></td>
-						<td><div class="forwardstatusnok"><input type="button" name="delete" value="X" title="delete" onclick="deleteItem(\''.$agent->userid.'\',\''.$_GET['search'].'\')"></div></td>
+		 				<td>'.$agent->userid.'</div></td>
+						<td>'.$agent->firstname.'</div></td>
+						<td>'.$agent->lastname.'</div></td>
+                        <td>'.$agent->number.'</div></td>
+                        <td>'.$agent->type.'</div></td>
+                        <td>'.$agent->team.'</div></td>
+                        <td><div class="forwardaction"><input type="button" name="Detail" value="Detail" title="Detail" onclick="showItem(\''.$agent->userid.'\')"></div></td>
+                        <td><div class="forwardaction"><input type="button" name="Update" value="Modifier" title="Update" onclick="updateItem(\''.$agent->userid.'\')"></div></td>
+						<td><div class="forwardstatusnok"><input type="button" name="delete" value="X" title="delete" onclick="deleteItem(\''.$agent->userid.'\')"></div></td>
 		 			</tr>
 					';
 				}

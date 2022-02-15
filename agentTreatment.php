@@ -14,15 +14,23 @@ if((isset($_GET["action"])) && ($_GET["action"] == "add"))
 	/**
 	 * We add the new entry
 	 */
+	$ucp = $_POST["ucp"];
+	$userid = $_POST["userid"];
 	$firstname = $_POST["firstname"];
 	$lastname = $_POST["lastname"];
-	$agenttype = $_POST["agenttype"];
+	$number = $_POST["number"];
 	$devicename = $_POST["devicename"];
 	$devicetype = $_POST["devicetype"];
 	$udplogin = $_POST["udplogin"];//Check if it is a boolean
+	if($udplogin == "on")
+	   {
+	   $udplogin = "true";
+	   }
+	else
+	   {
+	   $udplogin = "false";
+	   }
 	$team = $_POST["team"];
-	$primarysupervisorof = $_POST["primarysupervisorof"];
-	$secondarysupervisorof = $_POST["secondarysupervisorof"];
 	$skill1 = $_POST["skill1"];
 	$level1 = $_POST["level1"];
 	$skill2 = $_POST["skill2"];
@@ -36,41 +44,28 @@ if((isset($_GET["action"])) && ($_GET["action"] == "add"))
 	$request = "<xml>
 					<request>
 						<type>addAgent</type>
-                        <securitytoken>".$_SESSION['securitytoken']."</securitytoken>
+						<securitytoken>".$_SESSION['securitytoken']."</securitytoken>
 						<content>
 							<agent>
-								<firstname>".$firstname."</firstname>
-								<lastname>".$lastname."</lastname>
-								<type>".$agenttype."</type>
-								<devicename>".$devicename."</devicename>
-								<devicetype>".$devicetype."</devicetype>
-								<udplogin>".$udplogin."</udplogin>
-								<team>".$team."</team>
-								<primarysupervisorof>";
-	if($agenttype == "supervisor")
-		{
-		foreach($primarysupervisorof as $teamName)
-		   {
-		    $request .= "                  <team>".$teamName."</team>";
-		   }
-		}
-   $request .= "
-                                </primarysupervisorof>
-								<secondarysupervisorof>";
-   if($agenttype == "supervisor")
-		{
-		foreach($secondarysupervisorof as $teamName)
-		   {
-		   $request .= "                   <team>".$teamName."</team>";
-		   }
-		}
-	$request .= "
-                                </secondarysupervisorof>
-                                <skills>
-                                    <skill>
-                                        <name>".$skill1."</name>
-                                        <level>".$level1."</level>
-                                    </skill>";
+							    <usercreationprofile>".$ucp."</usercreationprofile>
+							    <userid>".$userid."</userid>
+							    <firstname>".$firstname."</firstname>
+							    <lastname>".$lastname."</lastname>
+							    <number>".$number."</number>
+							    <type>agent</type>
+							    <devicename>".$devicename."</devicename>
+							    <devicetype>".$devicetype."</devicetype>
+							    <udplogin>".$udplogin."</udplogin>
+							    <team>".$team."</team>
+							    <primarysupervisorof>
+							    </primarysupervisorof>
+							    <secondarysupervisorof>
+							    </secondarysupervisorof>
+							    <skills>
+							        <skill>
+							            <name>".$skill1."</name>
+							            <level>".$level1."</level>
+							        </skill>";
 	if(isset($skill2) && ($skill2 != "noSkill"))
 	   {
        $request .= "                                    <skill>
@@ -113,7 +108,7 @@ if((isset($_GET["action"])) && ($_GET["action"] == "add"))
 	
 	//Parse the response to get the taskID
 	$taskID = parseReply($resp);
-	$urlToReturn .= $urlToReturn."&taskID=".$taskID;
+	$urlToReturn = $urlToReturn."&taskID=".$taskID;
 	}
 else if((isset($_GET["action"])) && ($_GET["action"] == "delete"))
 	{
@@ -127,7 +122,9 @@ else if((isset($_GET["action"])) && ($_GET["action"] == "delete"))
                     <request>
                     <type>deleteAgent</type>
                     <content>
-                        <userid>".$userID."</userid>
+                    	<agent>
+                        	<userid>".$userID."</userid>
+                    	</agent>
                     </content>
                     </request>
                 </xml>";
@@ -145,7 +142,7 @@ else if((isset($_GET["action"])) && ($_GET["action"] == "delete"))
 	
 	//Parse the response to get the taskID
 	$taskID = parseReply($resp);
-	$urlToReturn += $urlToReturn."&taskID=".$taskID;
+	$urlToReturn = $urlToReturn."&taskID=".$taskID;
 	}
 else if((isset($_GET["action"])) && ($_GET["action"] == "update"))
 	{
@@ -262,14 +259,15 @@ else if((isset($_GET["action"])) && ($_GET["action"] == "update"))
     
     //Parse the response to get the taskID
     $taskID = parseReply($resp);
-    $urlToReturn .= $urlToReturn."&taskID=".$taskID;
+    $urlToReturn = $urlToReturn."&taskID=".$taskID;
 	}
 
 /**
  * Used to extract the taskID from the reply
  */
-function parseReply($reply)
+function parseReply($resp)
     {
+    $reply = simplexml_load_string($resp);
     return $reply->reply->content->taskid;
     }
 

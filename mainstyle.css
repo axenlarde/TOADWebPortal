@@ -154,6 +154,14 @@ html,body
     padding: 0px;
 	}
 
+.forwardlist td
+	{
+	border:2px solid #FFF;
+    font-size:15px;
+    background-color: #b1e8ef;
+    color:#000;
+	}
+
 .officestyle
 	{
 	border:2px solid #FFF;
@@ -165,7 +173,7 @@ html,body
 
 .forwarddate
 	{
-	border:2px solid #FFF;
+	/*border:2px solid #FFF;*/
     font-size:15px;
     background-color: #b1e8ef;
     color:#000;
@@ -174,7 +182,7 @@ html,body
 
 .forwardstatusok
 	{
-	border:2px solid #FFF;
+	/*border:2px solid #FFF;*/
     font-size:15px;
     background-color: #00ec00;
     color:#000;
@@ -183,7 +191,7 @@ html,body
 
 .forwardstatusnok
 	{
-	border:2px solid #FFF;
+	/*border:2px solid #FFF;*/
     font-size:15px;
     background-color: #ff0000;
     color:#000;
@@ -204,7 +212,7 @@ html,body
 
 .forwardaction
 	{
-	border:2px solid #FFF;
+	/*border:2px solid #FFF;*/
     font-size:15px;
     background-color: #c0d3d6;
     color:#000;

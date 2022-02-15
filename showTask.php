@@ -56,13 +56,14 @@ if(empty($task->items->item))
 
 function getVerboseStatus($status)
 	{
-	if($status == "preaudit") return '<div class="forwarddate">Audit préparatoire</div>';
-	else if($status == "update") return '<div class="forwarddate">Migration</div>';
-	else if($status == "rollback") return '<div class="forwarddate">Retour arrière</div>';
-	else if($status == "reset") return '<div class="forwarddate">Reset</div>';
-	else if($status == "postaudit") return '<div class="forwardstatusok">Audit post opération</div>';
-	else if($status == "done") return '<div class="forwardstatusok">Terminé</div>';
+	if($status == "processing") return '<div class="forwarddate">En cours de traitement</div>';
+	else if($status == "waiting") return '<div class="forwarddate">En attente</div>';
+	else if($status == "init") return '<div class="forwarddate">Initialisation</div>';
+	else if($status == "done") return '<div class="forwardstatusok">Terminé sans erreur</div>';
 	else if($status == "error") return '<div class="forwardstatusnok">Erreur</div>';
+	else if($status == "deleted") return '<div class="forwardstatusok">Supprimé</div>';
+	else if($status == "injected") return '<div class="forwardstatusok">Créé</div>';
+	else if($status == "updated") return '<div class="forwardstatusok">Mis à jour</div>';
 	return '<div class="forwarddate">'.$status.'</div>';
 	}
 	
@@ -76,56 +77,6 @@ function getVerboseDesc($desc)
 	else if($desc == "Reachable : unknown, Error found") return '<div class="forwardstatusnok">Ping en attente, Erreur</div>';
 	return '<div class="forwarddate">'.$desc.'</div>';
 	}
-
-function isOffice($itemType, $info)
-	{
-	if($itemType == "office") return '<div class="officestyle">'.$info.'</div>';
-	return '<div class="forwarddate">'.$info.'</div>';
-	}
-	
-function startButtonEnable($status)
-	{
-	if($status == "preaudit") return '';
-	else return 'disabled';
-	}
-	
-function pauseButtonEnable($status)
-	{
-	if($status == "preaudit") return 'disabled';
-	else if($status == "postaudit") return 'disabled';
-	else if($status == "done") return 'disabled';
-	else if($status == "error") return 'disabled';
-	else return '';
-	}
-	
-function stopButtonEnable($status)
-	{
-	if($status == "done") return 'disabled';
-	else if($status == "error") return 'disabled';
-	else return '';
-	}
-	
-function startButtonCSS($status)
-	{
-	if($status == "preaudit") return '<div class="forwardaction">';
-	else return '<div class="forwardactiondisable">';
-	}
-	
-function pauseButtonCSS($status)
-	{
-	if($status == "preaudit") return '<div class="forwardactiondisable">';
-	else if($status == "postaudit") return '<div class="forwardactiondisable">';
-	else if($status == "done") return '<div class="forwardactiondisable">';
-	else if($status == "error") return '<div class="forwardactiondisable">';
-	else return '<div class="forwardaction">';
-	}
-	
-function stopButtonCSS($status)
-	{
-	if($status == "done") return '<div class="forwardactiondisable">';
-	else if($status == "error") return '<div class="forwardactiondisable">';
-	else return '<div class="forwardaction">';
-	}
 ?>
 
 <h3>
@@ -137,11 +88,6 @@ function stopButtonCSS($status)
 <hr>
 <h3><div class="title">Détail de la tâche en cours : </div></h3>
 <table>
-	<tr>
-		<td><?php echo startButtonCSS($task->overallstatus); ?><input type="button" name="Start" value="Start" title="start" onclick="action('start','<?php echo $task->id?>')" <?php echo startButtonEnable($task->overallstatus); ?>></div></td>
-		<td><?php echo stopButtonCSS($task->overallstatus); ?><input type="button" name="Stop" value="Stop" title="Stop" onclick="action('stop','<?php echo $task->id?>')" <?php echo stopButtonEnable($task->overallstatus); ?>></div></td>
-		<td><?php echo pauseButtonCSS($task->overallstatus); ?><input type="button" name="Pause" value="Pause" title="Pause" onclick="action('pause','<?php echo $task->id?>')" <?php echo pauseButtonEnable($task->overallstatus); ?>></div></td>
-	</tr>
 	<tr>
 		<td>Statut de la tâche : <?php echo getVerboseStatus($task->status); ?></td>
 		<td></td>
