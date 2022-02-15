@@ -1,3 +1,6 @@
+<?php
+include "sessionFound.php";
+?>
 
 <script type="text/javascript">
 
@@ -26,89 +29,16 @@ function closeThisDay(formulaire, dayName)
 /** 
  * Page used to set the opening hours
  */
-include "branchFound.php";
-
-/****
- * We get the xml parameters to display
- */
-//First we read the xml file
-$xml = simplexml_load_file("document/xmlFiles/OverallSettings.xml") or die("Error");
-
-//Then we find the good branch to display
-$branchIndex = 1;
-$branchName = "";
-
-try 
-	{
-	//The limit is 10 branches
-	for($i = 0; $i<10; $i++)
-		{
-		$branchName = "branch".$branchIndex;
-		if(($xml->$branchName->name) == $_SESSION['login'][3])
-			{
-			break;
-			}
-		$branchIndex++;
-		}
-	}
-catch(Exception $exc)
-	{
-	//The branch doesn't exist
-	header("Location: mainpage.php");
-	exit;
-	}
-
-//Then we get the opening hours and priority tag file name
-$OHFileName = $xml->$branchName->openinghours;
-$PTFileName = $xml->$branchName->prioritytag;
-
-//Finally we open this file
+$OHFileName = "OpeningHours.xml";
 $OHFile = simplexml_load_file("document/xmlFiles/".$OHFileName) or die("Error");
-$PTFile = simplexml_load_file("document/xmlFiles/".$PTFileName) or die("Error");
-
-//We detect here if there are other opening hours files to use in the tag file
-$PublicHolidaysFileNameTag = "";
-$OtherScheduleFound = false;
-
-try
-	{
-	//The limit is 20 tags
-	for($i = 1; $i<20; $i++)
-		{
-		$TagName = "tag".$i;
-		$PublicHolidaysFileNameTag = $PTFile->$TagName->openinghours;
-		if($PublicHolidaysFileNameTag == null || ($PublicHolidaysFileNameTag == ""))
-			{
-			//Nothing found
-			}
-		else
-			{
-			$OtherScheduleFound = true;
-			}
-		}
-	}
-catch(Exception $exc)
-	{
-	//The tag doesn't exist
-	header("Location: mainpage.php");
-	exit;
-	}
-
 ?>
-<h3><a href="mainpage.php?page=branchMainAdmin">Retour</a>>Administration des horaires d'ouverture</h3>
+<h3><div class="navibar"><a href="mainpage.php?page=branchMainAdmin">Retour</a>
+>
+<a href="mainpage.php?page=manageScript">Gestion des scripts</a>
+>Gestion des horaires d'ouverture</div></h3>
 <br>
 <table>
 	<?php
-	if($OtherScheduleFound)
-		{
-		echo"<div style=\"text-align: right\">Pour gérer les autres horaires d'ouverture cliquer 
-		<a href=\"mainpage.php?page=selectionOpeningHoursTag\">ici</a>
-		</div>";
-		}
-	else
-		{
-		echo"<br>";
-		}
 	$dayIndex = 2; //Monday in the xml file
 	$dayNames = array("Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi","Dimanche");
 	

@@ -17,6 +17,9 @@ function checkNewInput(form)
 		}
 	else
 		{
+		document.getElementById("agenttype").disabled = false;
+		document.getElementById("userid").disabled = false;
+		document.getElementById("number").disabled = false;
 		form.submit();
 		}
 	}
@@ -30,8 +33,8 @@ function hide()
 		}
 	else
 		{
-		document.getElementById("primarysupervisor").style.display="block";
-		document.getElementById("secondarysupervisor").style.display="block";
+		document.getElementById("primarysupervisor").style.display="inline";
+		document.getElementById("secondarysupervisor").style.display="inline";
 		}
 	}
 	
@@ -48,6 +51,7 @@ function addNewRow()
 	index++;
 	}
 
+window.onload = hide;
 </script>
 
 <?php
@@ -201,7 +205,7 @@ if($skillCount == 0)
     						<?php
     						foreach($teamSearchResult->reply->content->teams->team as $team)
                                 {
-                                if($team == $agent->team)
+                                if(strcmp($team, $agent->team) == 0)
                                     {
                                     echo '<option value="'.$team.'" selected="selected">'.$team.'</option>';
                                     }
@@ -215,6 +219,10 @@ if($skillCount == 0)
 						</td>
 					</tr>
 					<tr>
+						<td>UserID : </td>
+						<td><input type="text" name="userid" id="userid" value="<?php echo $agent->userid;?>" disabled="disabled"></td>
+					</tr>
+					<tr>
 						<td>Nom : </td>
 						<td><input type="text" name="lastname" id="lastname" value="<?php echo $agent->lastname;?>"></td>
 					</tr>
@@ -225,7 +233,7 @@ if($skillCount == 0)
 					<tr>
 						<td>Type : </td>
 						<td>
-							<select name ="agenttype" id="agenttype" onchange="hide()">
+							<select name ="agenttype" id="agenttype" disabled="disabled">
 							<?php 
 							if($agent->type == "agent")
                                 {
@@ -245,17 +253,21 @@ if($skillCount == 0)
 							</select>
 						</td>
 					</tr>
+					<tr>
+						<td>Numéro de la ligne : </td>
+						<td><input type="text" name="number" id="number" value="<?php echo $agent->number;?>" disabled="disabled"></td>
+					</tr>
 					<tr id="primarysupervisor">
 						<td>Superviseur principal de : </td>
 						<td>
-							<select name="primarysupervisorof" id="primarysupervisorof" multiple>
+							<select name="primarysupervisorof[]" id="primarysupervisorof" multiple size = 6>
     						<?php
     						foreach($teamSearchResult->reply->content->teams->team as $team)
                                 {
                                 $found = false;
                                 foreach($agent->primarysupervisorof->team as $selectedTeam)
                                 	{
-                                	if($team == $selectedTeam)
+                                	if(strcmp($team,$selectedTeam) == 0)
                                 		{
                                 		echo '<option value="'.$team.'" selected="selected">'.$team.'</option>';
                                 		$found = true;
@@ -271,14 +283,14 @@ if($skillCount == 0)
 					<tr id="secondarysupervisor">
 						<td>Superviseur secondaire de : </td>
 						<td>
-							<select name="secondarysupervisorof" id="secondarysupervisorof" multiple>
+							<select name="secondarysupervisorof[]" id="secondarysupervisorof" multiple size = 6>
     						<?php
     						foreach($teamSearchResult->reply->content->teams->team as $team)
                                 {
                                 $found = false;
                                 foreach($agent->secondarysupervisorof->team as $selectedTeam)
                                 	{
-                                	if($team == $selectedTeam)
+                                		if(strcmp($team,$selectedTeam) == 0)
                                 		{
                                 		echo '<option value="'.$team.'" selected="selected">'.$team.'</option>';
                                 		$found = true;
@@ -297,7 +309,7 @@ if($skillCount == 0)
 					</tr>
 					<tr>
 						<td>Connecter l'utilisateur au téléphone indiqué : </td>
-						<td><input type="checkbox" name="udplogin" id="udplogin" checked></td>
+						<td><input type="checkbox" name="udplogin" id="udplogin"></td>
 					</tr>
 					<tr>
 						<td>Skill 1 : </td>
@@ -306,7 +318,7 @@ if($skillCount == 0)
     						<?php
     						foreach($skillSearchResult->reply->content->skills->skill as $skill)
                                 {
-                                if($skill == $agent->skills->skill[0])
+                                if(strcmp($skill,$agent->skills->skill[0]->name) == 0)
                                 	{
                                 	echo '<option value="'.$skill.'" selected="selected">'.$skill.'</option>';
                                 	}
@@ -321,7 +333,7 @@ if($skillCount == 0)
 							<?php 
 							for($i=1; $i<11; $i++)
 								{
-								if($agent->skills->skill[0] == $i)
+								if(strcmp($agent->skills->skill[0]->level,strval($i)) == 0)
 									{
 									echo '<option value="'.$i.'" selected="selected">'.$i.'</option>';
 									}
@@ -340,7 +352,7 @@ if($skillCount == 0)
 						<td>
 							<select name ="skill2" id="skill2">
     						<?php
-    						$selectedSkill = $agent->skills->skill[1];
+    						$selectedSkill = $agent->skills->skill[1]->name;
     						if(isset($selectedSkill))
     							{
     							echo '<option value="noSkill"></option>';
@@ -352,7 +364,7 @@ if($skillCount == 0)
     						
     						foreach($skillSearchResult->reply->content->skills->skill as $skill)
                                 {
-                                if(isset($selectedSkill) && ($skill == $selectedSkill))
+                                if(isset($selectedSkill) && (strcmp($skill,$selectedSkill) == 0))
                                 	{
                                 	echo '<option value="'.$skill.'" selected="selected">'.$skill.'</option>';
                                 	}
@@ -365,7 +377,7 @@ if($skillCount == 0)
 							</select>
 							<select name ="level2" id="level2">
 							<?php 
-							$selectedLevel = $agent->skills->skill[1];
+							$selectedLevel = $agent->skills->skill[1]->level;
 							for($i=1; $i<11; $i++)
 								{
 								if(isset($selectedLevel) && ($selectedLevel == $i))
@@ -386,7 +398,7 @@ if($skillCount == 0)
 						<td>
 							<select name ="skill3" id="skill3">
 							<?php
-    						$selectedSkill = $agent->skills->skill[2];
+    						$selectedSkill = $agent->skills->skill[2]->name;
     						if(isset($selectedSkill))
     							{
     							echo '<option value="noSkill"></option>';
@@ -398,7 +410,7 @@ if($skillCount == 0)
     						
     						foreach($skillSearchResult->reply->content->skills->skill as $skill)
                                 {
-                                if(isset($selectedSkill) && ($skill == $selectedSkill))
+                                if(isset($selectedSkill) && (strcmp($skill,$selectedSkill) == 0))
                                 	{
                                 	echo '<option value="'.$skill.'" selected="selected">'.$skill.'</option>';
                                 	}
@@ -411,7 +423,7 @@ if($skillCount == 0)
 							</select>
 							<select name ="level3" id="level3">
 							<?php 
-							$selectedLevel = $agent->skills->skill[2];
+							$selectedLevel = $agent->skills->skill[2]->level;
 							for($i=1; $i<11; $i++)
 								{
 								if(isset($selectedLevel) && ($selectedLevel == $i))
@@ -432,7 +444,7 @@ if($skillCount == 0)
 						<td>
 							<select name ="skill4" id="skill4">
 							<?php
-    						$selectedSkill = $agent->skills->skill[3];
+    						$selectedSkill = $agent->skills->skill[3]->name;
     						if(isset($selectedSkill))
     							{
     							echo '<option value="noSkill"></option>';
@@ -444,7 +456,7 @@ if($skillCount == 0)
     						
     						foreach($skillSearchResult->reply->content->skills->skill as $skill)
                                 {
-                                if(isset($selectedSkill) && ($skill == $selectedSkill))
+                                if(isset($selectedSkill) && (strcmp($skill,$selectedSkill) == 0))
                                 	{
                                 	echo '<option value="'.$skill.'" selected="selected">'.$skill.'</option>';
                                 	}
@@ -457,7 +469,7 @@ if($skillCount == 0)
 							</select>
 							<select name ="level4" id="level4">
 							<?php 
-							$selectedLevel = $agent->skills->skill[3];
+							$selectedLevel = $agent->skills->skill[3]->level;
 							for($i=1; $i<11; $i++)
 								{
 								if(isset($selectedLevel) && ($selectedLevel == $i))
@@ -476,7 +488,7 @@ if($skillCount == 0)
 				</table>
 			</td>
 			<td>
-				<input type="button" name="Ajouter" value="Ajouter" onclick="checkNewInput(this.form)">
+				<input type="button" name="Modifier" value="Modifier" onclick="checkNewInput(this.form)">
 			</td>
 		</tr>
 	</table>

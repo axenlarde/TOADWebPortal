@@ -17,6 +17,7 @@ function checkNewInput(form)
 		}
 	else
 		{
+		document.getElementById("agenttype").disabled = false;
 		form.submit();
 		}
 	}
@@ -223,7 +224,12 @@ function getVerboseDesc($desc)
 					</tr>
 					<tr>
 						<td>Type : </td>
-						<td>Agent</td>
+						<td>
+							<select name ="agenttype" id="agenttype" disabled="disabled">
+                                <option value="agent" selected="selected">Agent</option>
+                                <option value="supervisor">Superviseur</option>
+							</select>
+						</td>
 					</tr>
 					<tr>
 						<td>Numéro de la ligne : </td>
