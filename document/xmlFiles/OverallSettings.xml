@@ -2,8 +2,8 @@
 <!--
 File used to define all the global parameters
 -->
-<branches>
-	<branch1>
+<xml>
+	<branch>
 		<name>Vins</name>
 		<routepoint>911030</routepoint><!--Associated route point number-->
 		<enablegreetingprompt>false</enablegreetingprompt><!--Enable the greeting prompt-->
@@ -22,45 +22,5 @@ File used to define all the global parameters
 			<size>10</size>
 		</maxcallqueuesize>
 		<layoutlistname>Vins_AU</layoutlistname><!--Layout list name-->
-	</branch1>
-	<branch2>
-		<name>Expresso</name>
-		<routepoint>911031</routepoint><!--Associated route point number-->
-		<enablegreetingprompt>true</enablegreetingprompt><!--Enable the greeting prompt-->
-		<enabledissuasionprompt>true</enabledissuasionprompt><!--Enable the dissuasion prompt-->
-		<openinghours>OpeningHours_Expresso.xml</openinghours><!--Name of the opening hours file-->
-		<publicholiday>PublicHoliday_Expresso.xml</publicholiday><!--Name of the public holiday file-->
-		<incomingcallsdetection>
-			<enable>true</enable>
-			<list>IncomingCallsList_Expresso.xml</list><!--Name of the incoming calls list file-->
-		</incomingcallsdetection>
-		<prioritytag>PriorityTagList_Expresso.xml</prioritytag><!--Name of the prioritytag file-->
-		<maxwaitingtime>12</maxwaitingtime><!--Max waiting time for this branch. It has to be a simple number-->
-		<redirecttovoicemail>true</redirecttovoicemail><!--Redirect to voicemail if closed-->
-		<maxcallqueuesize>
-			<enable>false</enable>
-			<size>10</size>
-		</maxcallqueuesize>
-		<layoutlistname>Expresso_AU</layoutlistname><!--Layout list name-->
-	</branch2>
-	<branch3>
-		<name>Cafes</name>
-		<routepoint>54329</routepoint><!--Associated route point number-->
-		<enablegreetingprompt>true</enablegreetingprompt><!--Enable the greeting prompt-->
-		<enabledissuasionprompt>true</enabledissuasionprompt><!--Enable the dissuasion prompt-->
-		<openinghours>OpeningHours_Cafes.xml</openinghours><!--Name of the opening hours file-->
-		<publicholiday>PublicHoliday_Cafes.xml</publicholiday><!--Name of the public holiday file-->
-		<incomingcallsdetection>
-			<enable>false</enable>
-			<list>IncomingCallsList_Cafes.xml</list><!--Name of the incoming calls list file-->
-		</incomingcallsdetection>
-		<prioritytag>PriorityTagList_Cafes.xml</prioritytag><!--Name of the prioritytag file-->
-		<maxwaitingtime>4</maxwaitingtime><!--Max waiting time for this branch. It has to be a simple number-->
-		<redirecttovoicemail>true</redirecttovoicemail><!--Redirect to voicemail if closed-->
-		<maxcallqueuesize>
-			<enable>false</enable>
-			<size>10</size>
-		</maxcallqueuesize>
-		<layoutlistname>Cafes_AU</layoutlistname><!--Layout list name-->
-	</branch3>
-</branches>
+	</branch>
+</xml>
