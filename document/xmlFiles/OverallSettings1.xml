@@ -15,7 +15,7 @@ File used to define all the global parameters
 			<list>IncomingCallsList_Vins.xml</list><!--Name of the incoming calls list file-->
 		</incomingcallsdetection>
 		<prioritytag>PriorityTagList_Vins.xml</prioritytag><!--Name of the prioritytag file-->
-		<maxwaitingtime>12</maxwaitingtime><!--Max waiting time for this branch. It has to be a simple number-->
+		<maxwaitingtime>100</maxwaitingtime><!--Max waiting time for this branch. It has to be a simple number-->
 		<redirecttovoicemail>true</redirecttovoicemail><!--Redirect to voicemail if closed-->
 		<maxcallqueuesize>
 			<enable>false</enable>

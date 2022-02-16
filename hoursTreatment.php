@@ -1,10 +1,10 @@
 <?php
 session_start(); // Création de la session
+include "sessionFound.php";
 
 /******
  * Page used to update opening hours
  */
-
 
 $OHFileName = "";
 $OHFile = "";
@@ -12,11 +12,16 @@ $fileFound = false;
 $dayIndex = 2; //Monday in the xml file
 $dayNames = array("Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi","Dimanche");
 
-if(isset($_GET['ohfilename']))
+if(isset($_GET['ohfilename']) && isset($_GET['script']))
 	{
 	$OHFileName = $_GET['ohfilename'];
 	$OHFile = simplexml_load_file("document/xmlFiles/".$OHFileName) or die("Error");
 	$fileFound = true;
+	}
+else
+	{
+	header('Location: mainpage.php?page=branchMainAdmin&message=generalerror');
+	exit;
 	}
 	
 if($fileFound)
@@ -102,7 +107,7 @@ if($fileFound)
 	}
 
 //To go back to the opening hours administration page
-header("Location: mainpage.php?page=adminOpeningHours");
+header("Location: mainpage.php?page=manageHours&script=".$_GET['script']);
 exit;
 
 ?>

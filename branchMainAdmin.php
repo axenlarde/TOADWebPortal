@@ -8,7 +8,7 @@ include "sessionFound.php";
 
 <table class="mainmenu">
 	<tr><td><a href="mainpage.php?page=manageAgent">Gestion des agents</a></td></tr>
-	<tr><td><a href="mainpage.php?page=manageScript">Gestion des scripts</a></td></tr>
+	<tr><td><a href="mainpage.php?page=manageScripts">Gestion des scripts</a></td></tr>
 	<?php
 	
 	//If the user is an admin we display the "user admin menu"

@@ -1,116 +1,57 @@
 <?php
 session_start(); // Création de la session
+include "sessionFound.php";
 
 /******
- * Page used to treat a new parameters value
+ * Page used to update closure days
  */
+$PHFileName = "";
+$PHFile = "";
 
-include "branchFound.php";
-
-$holidaysFileName = "";
-$holidaysFile = "";
-$AdminPage = "adminHolidays";
-$TagName = "";
-$fileFound = false;
-
-if(isset($_GET['holidaysfilename']))
+if(isset($_GET['phfilename']) && isset($_GET['script']))
 	{
-	$holidaysFileName = $_GET['holidaysfilename'];
-	$holidaysFile = simplexml_load_file("document/xmlFiles/".$holidaysFileName) or die("Error");
-	$fileFound = true;
+	$PHFileName = $_GET['phfilename'];
+	$PHFile = simplexml_load_file("document/xmlFiles/".$PHFileName) or die("Error");
+	}
+else
+	{
+	header('Location: mainpage.php?page=branchMainAdmin&message=generalerror');
+	exit;
 	}
 	
-if(isset($_GET['adminpage']))
-	{
-	$AdminPage = $_GET['adminpage'];
-	}
 	
-if(isset($_GET['tag']))
-	{
-	$TagName = $_GET['tag'];
-	}
-	
-if($fileFound)
+if((isset($_POST["newDateInput"])) && ($_POST["newDateInput"] != ""))
 	{
 	/**
-	 * We find the last index and we extract all the closure days
+	 * We add the new date
 	 */
-	$index = 1;
-	$closureDayName = "";
-	$closureDays = array();
+	$newDay = $PHFile->addChild("day", $_POST["newDateInputDesc"]);
+	$newDay->addAttribute("date", $_POST["newDateInput"]);
 	
-	while(true)
-		{
-		$closureDayName = "PUBLICHOLIDAY".$index;
-		$closureday = $holidaysFile->$closureDayName;
+	$NewDoc = new DOMDocument();
+	$NewDoc->preserveWhiteSpace = false;
+	$NewDoc->formatOutput = true;
 	
-		if(isset($holidaysFile->$closureDayName))
-			{
-			$closureDays[$index-1] = $holidaysFile->$closureDayName;
-			}
-		else
-			{
-			break;
-			}
+	$NewDoc->loadXML($PHFile->asXML());
+	$NewDoc->save("document/xmlFiles/".$PHFileName);
+	}
+else if((isset($_GET["dateToRemove"])) && ($_GET["dateToRemove"] != ""))
+	{
+	/**
+	 * From here we remove the date from the file
+	 */
+	$dom=dom_import_simplexml($PHFile->day[intval($_GET["dateToRemove"])]);
+	$dom->parentNode->removeChild($dom);
 	
-		if($index>500)break;//Just a security
-		$index++;
-		}	
-	
-	if((isset($_POST["newDateInput"])) && ($_POST["newDateInput"] != ""))
-		{
-		/**
-		 * We add the new date
-		 */
-		$holidaysFile->addChild($closureDayName, $_POST["newDateInput"]);
-		
-		$NewDoc = new DOMDocument();
-		$NewDoc->preserveWhiteSpace = false;
-		$NewDoc->formatOutput = true;
-		
-		$NewDoc->loadXML($holidaysFile->asXML());
-		$NewDoc->save("document/xmlFiles/".$holidaysFileName);
-		}
-	else if((isset($_GET["dateToRemove"])) && ($_GET["dateToRemove"] != ""))
-		{
-		/**
-		 * From here we write a brand new XML file without the removed date
-		 */
-		$xmlstr = "<PUBLICHOLIDAYS></PUBLICHOLIDAYS>";
-		$newXMLFile = new SimpleXMLElement($xmlstr);
-		$index = 1;
-		
-		for($i=0; $i<count($closureDays); $i++)
-			{
-			if(($i+1) != $_GET["dateToRemove"])
-				{
-				$newXMLFile->addChild("PUBLICHOLIDAY".$index, $closureDays[$i]);
-				$index++;
-				}
-			}
-		
-		$NewDoc = new DOMDocument();
-		$NewDoc->preserveWhiteSpace = false;
-		$NewDoc->formatOutput = true;
-		
-		$NewDoc->loadXML($newXMLFile->asXML());
-		
-		if(count($closureDays)<=1)
-			{
-			//We do not delete the last entry
-			}
-		else
-			{
-			$NewDoc->save("document/xmlFiles/".$holidaysFileName);
-			}
-		//$NewDoc->save($holidaysFileName);
-		}
+	$NewDoc = new DOMDocument();
+	$NewDoc->preserveWhiteSpace = false;
+	$NewDoc->formatOutput = true;
+	$NewDoc->loadXML($PHFile->asXML());
+	$NewDoc->save("document/xmlFiles/".$PHFileName);
 	}
 
-//To go back to the global paramaters administration page
-$TagTemp = "";
-if($TagName != "")$TagTemp="&tag=".$TagName;
-header("Location: mainpage.php?page=".$AdminPage.$TagTemp);
+//To go back to the public holidays administration page
+header("Location: mainpage.php?page=manageHolidays&script=".$_GET['script']);
 exit;
 
 ?>

@@ -88,14 +88,20 @@ else
 					</tr>
 					<tr>
 						<td>Superviseur primaire de : </td>
-						<td><?php echo $agent->primarysupervisorof->team?></td>
+						<td><?php 
+						foreach ($agent->primarysupervisorof->team as $team)
+						  {
+						  echo $team.', ';
+						  }
+						?>
+						</td>
 					</tr>
 					<tr>
 						<td>Superviseur secondaire de : </td>
 						<td><?php 
 						foreach ($agent->secondarysupervisorof->team as $team)
 						  {
-						  echo $team.' ';
+						  echo $team.', ';
 						  }
 						?>
 						</td>

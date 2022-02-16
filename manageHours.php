@@ -29,13 +29,34 @@ function closeThisDay(formulaire, dayName)
 /** 
  * Page used to set the opening hours
  */
-$OHFileName = "OpeningHours.xml";
+$OHFileName = "";
+if(isset($_GET["script"]) && ($_GET["script"] != ''))
+	{
+    //First we read the xml file
+    $scriptList = simplexml_load_file("document/scripts.xml") or die("Error");
+    //Then we take only the file we need for the given script
+	foreach ($scriptList->scripts->script as $script)
+		{
+		if(strcmp($script->name,$_GET["script"]) == 0)
+			{
+			$OHFileName = $script->openinghours;
+			break;
+			}
+		}
+	}
+
+if($OHFileName == "")
+	{
+	header('Location: mainpage.php?page=branchMainAdmin&message=generalerror');
+	exit;
+	}
+
 $OHFile = simplexml_load_file("document/xmlFiles/".$OHFileName) or die("Error");
 ?>
 <h3><div class="navibar"><a href="mainpage.php?page=branchMainAdmin">Retour</a>
 >
-<a href="mainpage.php?page=manageScript">Gestion des scripts</a>
->Gestion des horaires d'ouverture</div></h3>
+<a href="mainpage.php?page=manageScripts">Gestion des scripts</a>
+>Gestion des horaires d'ouverture : <?php echo $_GET["script"];?></div></h3>
 <br>
 <table>
 	<?php
@@ -98,7 +119,7 @@ $OHFile = simplexml_load_file("document/xmlFiles/".$OHFileName) or die("Error");
 		}
 	?>
 </table>
-<form name="openingHoursForm" id="openingHoursForm" method=post action="openingHoursTreatment.php?ohfilename=<?php echo $OHFileName?>" onkeypress="submitForm(event)">
+<form name="openingHoursForm" id="openingHoursForm" method=post action="<?php echo "hoursTreatment.php?ohfilename=".$OHFileName."&script=".$_GET["script"];?>" onkeypress="submitForm(event)">
 	<br>
 	<br>
 	<b>Nouvelles valeurs :</b>

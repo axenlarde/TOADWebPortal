@@ -1,12 +1,10 @@
 <?php
 session_start(); // Création de la session
+include "sessionFound.php";
 
 /******
  * Page used to process agent changes (Add/Delete/Update)
  */
-
-include "sessionFound.php";
-
 $urlToReturn = "Location: mainpage.php?page=showTask";
 
 if((isset($_GET["action"])) && (($_GET["action"] == "add") || ($_GET["action"] == "update")))

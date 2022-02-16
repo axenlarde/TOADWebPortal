@@ -62,8 +62,8 @@ function getVerboseStatus($status)
 	else if($status == "done") return '<div class="forwardstatusok">Terminé sans erreur</div>';
 	else if($status == "error") return '<div class="forwardstatusnok">Erreur</div>';
 	else if($status == "deleted") return '<div class="forwardstatusok">Supprimé</div>';
-	else if($status == "injected") return '<div class="forwardstatusok">Créé</div>';
-	else if($status == "updated") return '<div class="forwardstatusok">Mis à jour</div>';
+	else if($status == "injected") return '<div class="forwardstatusok">OK</div>';
+	else if($status == "updated") return '<div class="forwardstatusok">OK</div>';
 	return '<div class="forwarddate">'.$status.'</div>';
 	}
 	

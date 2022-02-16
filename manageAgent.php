@@ -1,3 +1,6 @@
+<?php
+include "sessionFound.php";
+?>
 
 <script type="text/javascript">
 
@@ -36,11 +39,6 @@ function searchOnKeyPress(event)
 		}
 	}
 
-function emptyCart(search)
-	{
-	window.location = "shoppingCartTreatment.php?action=emptycart&search="+search;
-	}
-
 </script>
 
 
@@ -48,7 +46,6 @@ function emptyCart(search)
 /** 
  * Page used to setup a new task
  */
-include "sessionFound.php";
 
 /****
  * We fetch agent list
@@ -127,8 +124,7 @@ if(isset($_SESSION['search']))
 	
 	if($AgentCount > 0)
 		{
-		echo'<h3>Résultat de la recherche : </h3><hr>';
-		echo'<h4>Agents : </h4>
+		echo'<h3>Résultat de la recherche : </h3><hr>
 		<div class="forwardlist">
 		<table>
 			<tr>
@@ -138,6 +134,7 @@ if(isset($_SESSION['search']))
 				<td><b>Numéro</b></td>
                 <td><b>Type</b></td>
 				<td><b>Team</b></td>
+				<td><b>Skills</b></td>
 			</tr>
 			';
 		
@@ -154,6 +151,12 @@ if(isset($_SESSION['search']))
 			
 			if(isset($agent))
 				{
+				$skills = "";
+				foreach($agent->skills->skill as $skill)
+					{
+					$skills .= $skill->name.":".$skill->level." ";
+					}
+				
 				echo '<tr>
 		 				<td>'.$agent->userid.'</div></td>
 						<td>'.$agent->firstname.'</div></td>
@@ -161,6 +164,7 @@ if(isset($_SESSION['search']))
                         <td>'.$agent->number.'</div></td>
                         <td>'.$agent->type.'</div></td>
                         <td>'.$agent->team.'</div></td>
+						<td>'.$skills.'</div></td>
                         <td><div class="forwardaction"><input type="button" name="Detail" value="Detail" title="Detail" onclick="showItem(\''.$agent->userid.'\')"></div></td>
                         <td><div class="forwardaction"><input type="button" name="Update" value="Modifier" title="Update" onclick="updateItem(\''.$agent->userid.'\')"></div></td>
 						<td><div class="forwardstatusnok"><input type="button" name="delete" value="X" title="delete" onclick="deleteItem(\''.$agent->userid.'\')"></div></td>

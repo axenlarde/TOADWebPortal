@@ -160,6 +160,7 @@ html,body
     font-size:15px;
     background-color: #b1e8ef;
     color:#000;
+    /*word-wrap:break-word;*/
 	}
 
 .officestyle

@@ -15,11 +15,16 @@ function checkNewInput(form)
 		{
 		alert("Le nom est obligatoire");
 		}
+	else if((document.getElementById("devicename").value != "") && (!document.getElementById("devicename").value.match(/^[0-9A-F]{12}$/)))
+		{
+		alert("L'adresse MAC est incorrecte");
+		}
 	else
 		{
 		document.getElementById("agenttype").disabled = false;
 		document.getElementById("userid").disabled = false;
 		document.getElementById("number").disabled = false;
+		document.getElementById("team").disabled = false;
 		form.submit();
 		}
 	}
@@ -201,7 +206,7 @@ if($skillCount == 0)
 					<tr>
 						<td>Team : </td>
 						<td>
-							<select name="team" id="team">
+							<select name="team" id="team" disabled="disabled">
     						<?php
     						foreach($teamSearchResult->reply->content->teams->team as $team)
                                 {
