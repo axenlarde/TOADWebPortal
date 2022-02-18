@@ -32,14 +32,7 @@ if((isset($_GET["action"])) && (($_GET["action"] == "add") || ($_GET["action"] =
 	$team = $_POST["team"];
 	$primarysupervisorof = @$_POST["primarysupervisorof"];
 	$secondarysupervisorof = @$_POST["secondarysupervisorof"];
-	$skill1 = $_POST["skill1"];
-	$level1 = $_POST["level1"];
-	$skill2 = $_POST["skill2"];
-	$level2 = $_POST["level2"];
-	$skill3 = $_POST["skill3"];
-	$level3 = $_POST["level3"];
-	$skill4 = $_POST["skill4"];
-	$level4 = $_POST["level4"];
+	$skills = $_POST["AssignedList"];
 	
 	$requestType = "addAgent";
 	if($_GET["action"] == "update")
@@ -71,52 +64,35 @@ if((isset($_GET["action"])) && (($_GET["action"] == "add") || ($_GET["action"] =
 	    	{
 	    	foreach($_POST["primarysupervisorof"] as $teamName)
 		    	{
-		        $request .= "                  <team>".$teamName."</team>";
+		        $request .= "							    	<team>".$teamName."</team>
+";
 		    	}
 	    	}
-	    $request .= "
-                                </primarysupervisorof>
-								<secondarysupervisorof>
+	    $request .= "							    </primarysupervisorof>
+							    <secondarysupervisorof>
 ";
 	    if(strcmp($agenttype,"supervisor") == 0)
 	    	{
 	    	foreach($secondarysupervisorof as $teamName)
 	    		{
-	        	$request .= "                   <team>".$teamName."</team>";
+	        	$request .= "							    	<team>".$teamName."</team>
+";
 	    		}
 	    	}
 	    
-	    $request .= "
-                                </secondarysupervisorof>
+	    $request .= "							    </secondarysupervisorof>
 							    <skills>
-							        <skill>
-							            <name>".$skill1."</name>
-							            <level>".$level1."</level>
-							        </skill>";
-	if(isset($skill2) && ($skill2 != "noSkill"))
-	   {
-       $request .= "                                    <skill>
-                                        <name>".$skill2."</name>
-                                        <level>".$level2."</level>
-                                    </skill>";
-	   }
-   if(isset($skill3) && ($skill3 != "noSkill"))
-	   {
-       $request .= "                                    <skill>
-                                        <name>".$skill3."</name>
-                                        <level>".$level3."</level>
-                                    </skill>";
-	   }
-   if(isset($skill4) && ($skill4 != "noSkill"))
-	   {
-	       $request .= "                                    <skill>
-                                        <name>".$skill4."</name>
-                                        <level>".$level4."</level>
-                                    </skill>";
-	   }
-	
-	
-	$request .= "						</skills>
+";
+	    foreach($skills as $skill)
+	   		{
+	   		$skillArray = explode("(",$skill);
+	    	$request .= "							    	<skill>
+							    		<name>".$skillArray[0]."</name>
+							    		<level>".substr($skillArray[1],0,-1)."</level>
+							    	</skill>
+";
+	    	}
+	$request .= "							    </skills>
 							</agent>
 						</content>
 					</request>

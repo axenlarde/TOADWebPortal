@@ -22,22 +22,145 @@ function checkNewInput(form)
 	else
 		{
 		document.getElementById("agenttype").disabled = false;
+		selectAll();
 		form.submit();
 		}
 	}
 	
-function addNewRow()
+function selectAll()
 	{
-	var myTable = document.getElementById("userForm");
-	var row = myTable.insertRow(-1)
-	var cell1 = row.insertCell(0);
-	var cell2 = row.insertCell(1);
-	var cell3 = row.insertCell(2);
-	cell1.innerHTML = "Skill "+index+" : ";
-	cell2.innerHTML = "<input type=\"text\" name=\"destinationDescription"+index+"\" id=\"destinationDescription"+index+"\">";
-	cell3.innerHTML = "<input type=\"text\" name=\"destination"+index+"\" id=\"destination"+index+"\">";
-	index++;
+	var list = document.getElementById('AssignedList');
+	for (var i = 0; i < list.options.length; i++)
+		{
+    	list.options[i].selected = "true";
+    	}
 	}
+	
+function doAssignButton(t)
+	{
+	var selectedItems = $('select[id=NotAssignedList]').find(":selected");
+
+	if (selectedItems.length === 0)
+		{
+		alert ("Une compétence doit être sélectionnée");
+		return;
+		}
+	if (selectedItems.length > 50){
+		alert ("Il n'est pas possible d'associer plus de 50 compétences");
+		return;
+		}	
+	
+	$.each(selectedItems, function (i, item) {
+		var skill_level = $('select[id=csdCL]').val();
+		var substring = item.text + "(" + skill_level +")";
+		$('select[id=AssignedList]').append($('<option>', { 
+			value: substring,
+			text: substring
+		}));		
+	});
+	
+	//Removes all selected items
+	selectedItems.remove();
+	}
+
+function deselectNotAssigned()
+	{
+	document.NewUserForm.NotAssignedList.selectedIndex=-1;
+	}
+
+function doNotAssignButton(t)
+	{
+	var selectedItems = $('select[id=AssignedList]').find(":selected");
+
+	if (selectedItems.length === 0)
+		{
+		alert ("Une compétence doit être sélectionnée");
+		return;
+		}
+	
+	$.each(selectedItems, function (i, item) {
+		var txt = item.text;
+		var idx = txt.indexOf("(");
+		if(idx !== -1){
+			txt = txt.substring(0,idx);
+		}
+		$('select[id=NotAssignedList]').append($('<option>', { 
+			value: txt,
+			text: txt
+		}));		
+	});
+	
+	//Removes all selected items
+	selectedItems.remove();	
+	}
+
+function deselectAssigned()
+	{
+	document.NewUserForm.AssignedList.selectedIndex=-1;
+	}
+
+function changeCL()
+	{
+	var skill_level = document.NewUserForm.csdCL.value;
+	var sindex = document.NewUserForm.AssignedList.selectedIndex;
+	if(sindex == -1)
+		{
+		return;
+		}
+
+	var txt = document.NewUserForm.AssignedList.options[sindex].text;
+
+	var idx = txt.indexOf("(");
+	txt = txt.substring(0,idx);
+
+
+	var substring = txt + "(" + skill_level +")";
+
+	document.NewUserForm.AssignedList.options[sindex].text = substring;
+	document.NewUserForm.AssignedList.options[sindex].value = substring;
+	document.NewUserForm.AssignedList.selectedIndex=sindex;
+	}
+
+
+function clickUAL()
+	{
+	deselectAssigned();
+	}
+
+function changeUAL()
+	{
+	var sindex = document.NewUserForm.NotAssignedList.selectedIndex;
+	if(sindex == -1)
+		{
+		return;
+		}
+
+	document.NewUserForm.csdCL.value = 5;
+	}
+
+
+function clickAL()
+	{
+	deselectNotAssigned();
+	}
+
+function changeAL()
+	{
+	var sindex = document.NewUserForm.AssignedList.selectedIndex;
+	if(sindex == -1)
+		{
+		return;
+		}
+
+	var txt = document.NewUserForm.AssignedList.options[sindex].text;
+
+	var idx1 = txt.indexOf("(");
+	var idx2 = txt.indexOf(")");
+	var slevel = txt.substring(idx1+1,idx2);
+
+	document.NewUserForm.csdCL.value = slevel;
+	}
+
 
 </script>
 
@@ -263,77 +386,42 @@ function getVerboseDesc($desc)
 						<td><input type="checkbox" name="udplogin" id="udplogin"></td>
 					</tr>
 					<tr>
-						<td>Skill 1* : </td>
-						<td>
-							<select name ="skill1" id="skill1">
-    						<?php
-    						foreach($skillSearchResult->reply->content->skills->skill as $skill)
-                                {
-                                echo '<option value="'.$skill.'">'.$skill.'</option>';
-                                }
-                            ?>
-							</select>
-							<select name ="level1" id="level1">
-								<option value="1">1</option>
-								<option value="2">2</option>
-								<option value="3">3</option>
-								<option value="4">4</option>
-								<option value="5" selected="selected">5</option>
-								<option value="6">6</option>
-								<option value="7">7</option>
-								<option value="8">8</option>
-								<option value="9">9</option>
-								<option value="10">10</option>
-							</select>
-							<!--<input type="button" name="add" value="+" onclick="addNewRow()">-->
-						</td>
+					  <td>
+						Compétences assignées (Skill)
+					  </td>
+					  <td></td>
+					  <td width="54%">
+						Compétences disponibles (Skill)
+					  </td>
 					</tr>
 					<tr>
-						<td>Skill 2 : </td>
-						<td>
-							<select name ="skill2" id="skill2">
-								<option value="noSkill" selected="selected"></option>
-    						<?php
-    						foreach($skillSearchResult->reply->content->skills->skill as $skill)
-                                {
-                                echo '<option value="'.$skill.'">'.$skill.'</option>';
-                                }
-                            ?>
-							</select>
-							</select>
-							<select name ="level2" id="level2">
-								<option value="1">1</option>
-								<option value="2">2</option>
-								<option value="3">3</option>
-								<option value="4">4</option>
-								<option value="5" selected="selected">5</option>
-								<option value="6">6</option>
-								<option value="7">7</option>
-								<option value="8">8</option>
-								<option value="9">9</option>
-								<option value="10">10</option>
-							</select>
-						</td>
+					  <td width="40%">
+							<select size="4" style=width:200px name="AssignedList[]" id="AssignedList" tabindex="4" onchange="changeAL()" onclick="clickAL()" multiple></select>
+					  </td>
+					  <td width="6%">
+						<a href="javascript:doAssignButton(this.form);"><</a>
+					<p><a href="javascript:doNotAssignButton(this.form);">></a>
+					  </td>
+					  <td width="54%">
+						<select size="4" style=width:200px name="NotAssignedList[]" id="NotAssignedList" tabindex="5" onchange="changeUAL()" onclick="clickUAL()" multiple>
+						<?php 
+							foreach($skillSearchResult->reply->content->skills->skill as $skill)
+								{
+								echo '<option value="'.$skill.'">'.$skill.'</option>';
+								}
+							?>
+						</select>
+					  </td>
 					</tr>
 					<tr>
-						<td>Skill 3 : </td>
+						<td>Niveau de compétence : </td>
 						<td>
-							<select name ="skill3" id="skill3">
-								<option value="noSkill" selected="selected"></option>
-    						<?php
-    						foreach($skillSearchResult->reply->content->skills->skill as $skill)
-                                {
-                                echo '<option value="'.$skill.'">'.$skill.'</option>';
-                                }
-                            ?>
-							</select>
-							</select>
-							<select name ="level3" id="level3">
+							<select size="1" name="csdCL" id="csdCL" onchange="changeCL()">
 								<option value="1">1</option>
 								<option value="2">2</option>
 								<option value="3">3</option>
 								<option value="4">4</option>
-								<option value="5" selected="selected">5</option>
+								<option selected="selected">5</option>
 								<option value="6">6</option>
 								<option value="7">7</option>
 								<option value="8">8</option>
@@ -341,33 +429,7 @@ function getVerboseDesc($desc)
 								<option value="10">10</option>
 							</select>
 						</td>
-					</tr>
-					<tr>
-						<td>Skill 4 : </td>
-						<td>
-							<select name ="skill4" id="skill4">
-								<option value="noSkill" selected="selected"></option>
-    						<?php
-    						foreach($skillSearchResult->reply->content->skills->skill as $skill)
-                                {
-                                echo '<option value="'.$skill.'">'.$skill.'</option>';
-                                }
-                            ?>
-							</select>
-							</select>
-							<select name ="level4" id="level4">
-								<option value="1">1</option>
-								<option value="2">2</option>
-								<option value="3">3</option>
-								<option value="4">4</option>
-								<option value="5" selected="selected">5</option>
-								<option value="6">6</option>
-								<option value="7">7</option>
-								<option value="8">8</option>
-								<option value="9">9</option>
-								<option value="10">10</option>
-							</select>
-						</td>
+						<td>(1-Débutant, 10-Expert)</td>
 					</tr>
 				</table>
 			</td>

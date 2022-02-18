@@ -25,35 +25,157 @@ function checkNewInput(form)
 		document.getElementById("userid").disabled = false;
 		document.getElementById("number").disabled = false;
 		document.getElementById("team").disabled = false;
+		selectAll();
 		form.submit();
 		}
 	}
+
+function selectAll()
+	{
+	var list = document.getElementById('AssignedList');
+	for (var i = 0; i < list.options.length; i++)
+		{
+    	list.options[i].selected = "true";
+    	}
+	}
 	
+function doAssignButton(t)
+	{
+	var selectedItems = $('select[id=NotAssignedList]').find(":selected");
+
+	if (selectedItems.length === 0)
+		{
+		alert ("Une compétence doit être sélectionnée");
+		return;
+		}
+	if (selectedItems.length > 50){
+		alert ("Il n'est pas possible d'associer plus de 50 compétences");
+		return;
+		}	
+	
+	$.each(selectedItems, function (i, item) {
+		var skill_level = $('select[id=csdCL]').val();
+		var substring = item.text + "(" + skill_level +")";
+		$('select[id=AssignedList]').append($('<option>', { 
+			value: substring,
+			text: substring
+		}));		
+	});
+	
+	//Removes all selected items
+	selectedItems.remove();
+	}
+
+function deselectNotAssigned()
+	{
+	document.NewUserForm.NotAssignedList.selectedIndex=-1;
+	}
+
+function doNotAssignButton(t)
+	{
+	var selectedItems = $('select[id=AssignedList]').find(":selected");
+
+	if (selectedItems.length === 0)
+		{
+		alert ("Une compétence doit être sélectionnée");
+		return;
+		}
+	
+	$.each(selectedItems, function (i, item) {
+		var txt = item.text;
+		var idx = txt.indexOf("(");
+		if(idx !== -1){
+			txt = txt.substring(0,idx);
+		}
+		$('select[id=NotAssignedList]').append($('<option>', { 
+			value: txt,
+			text: txt
+		}));		
+	});
+	
+	//Removes all selected items
+	selectedItems.remove();	
+	}
+
+function deselectAssigned()
+	{
+	document.NewUserForm.AssignedList.selectedIndex=-1;
+	}
+
+function changeCL()
+	{
+	var skill_level = document.NewUserForm.csdCL.value;
+	var sindex = document.NewUserForm.AssignedList.selectedIndex;
+	if(sindex == -1)
+		{
+		return;
+		}
+
+	var txt = document.NewUserForm.AssignedList.options[sindex].text;
+
+	var idx = txt.indexOf("(");
+	txt = txt.substring(0,idx);
+
+
+	var substring = txt + "(" + skill_level +")";
+
+	document.NewUserForm.AssignedList.options[sindex].text = substring;
+	document.NewUserForm.AssignedList.options[sindex].value = substring;
+	document.NewUserForm.AssignedList.selectedIndex=sindex;
+	}
+
+
+function clickUAL()
+	{
+	deselectAssigned();
+	}
+
+function changeUAL()
+	{
+	var sindex = document.NewUserForm.NotAssignedList.selectedIndex;
+	if(sindex == -1)
+		{
+		return;
+		}
+
+	document.NewUserForm.csdCL.value = 5;
+	}
+
+
+function clickAL()
+	{
+	deselectNotAssigned();
+	}
+
+function changeAL()
+	{
+	var sindex = document.NewUserForm.AssignedList.selectedIndex;
+	if(sindex == -1)
+		{
+		return;
+		}
+
+	var txt = document.NewUserForm.AssignedList.options[sindex].text;
+
+	var idx1 = txt.indexOf("(");
+	var idx2 = txt.indexOf(")");
+	var slevel = txt.substring(idx1+1,idx2);
+
+	document.NewUserForm.csdCL.value = slevel;
+	}
+
 function hide()
 	{
 	if(document.getElementById("agenttype").value == "agent")
 		{
-		document.getElementById("primarysupervisor").style.display="none";
-		document.getElementById("secondarysupervisor").style.display="none";
+		document.getElementById("supervisorteamselector").style.display="none";
+		document.getElementById("supervisorteamselectortitle").style.display="none";
 		}
 	else
 		{
-		document.getElementById("primarysupervisor").style.display="inline";
-		document.getElementById("secondarysupervisor").style.display="inline";
+		document.getElementById("supervisorteamselector").style.display="compact";
+		document.getElementById("supervisorteamselectortitle").style.display="compact";
 		}
-	}
-	
-function addNewRow()
-	{
-	var myTable = document.getElementById("userForm");
-	var row = myTable.insertRow(-1)
-	var cell1 = row.insertCell(0);
-	var cell2 = row.insertCell(1);
-	var cell3 = row.insertCell(2);
-	cell1.innerHTML = "Skill "+index+" : ";
-	cell2.innerHTML = "<input type=\"text\" name=\"destinationDescription"+index+"\" id=\"destinationDescription"+index+"\">";
-	cell3.innerHTML = "<input type=\"text\" name=\"destination"+index+"\" id=\"destination"+index+"\">";
-	index++;
 	}
 
 window.onload = hide;
@@ -262,48 +384,67 @@ if($skillCount == 0)
 						<td>Numéro de la ligne : </td>
 						<td><input type="text" name="number" id="number" value="<?php echo $agent->number;?>" disabled="disabled"></td>
 					</tr>
-					<tr id="primarysupervisor">
+					<tr id="supervisorteamselectortitle">
 						<td>Superviseur principal de : </td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td>Superviseur secondaire de : </td>
+					</tr>
+					<tr id="supervisorteamselector">
 						<td>
-							<select name="primarysupervisorof[]" id="primarysupervisorof" multiple size = 6>
+							<select style=width:200px name="primarysupervisorof[]" id="primarysupervisorof" multiple size = "4">
     						<?php
-    						foreach($teamSearchResult->reply->content->teams->team as $team)
-                                {
-                                $found = false;
-                                foreach($agent->primarysupervisorof->team as $selectedTeam)
-                                	{
-                                	if(strcmp($team,$selectedTeam) == 0)
-                                		{
-                                		echo '<option value="'.$team.'" selected="selected">'.$team.'</option>';
-                                		$found = true;
-                                		break;
-                                		}
-                                	}
-    						    if(!$found)	echo '<option value="'.$team.'">'.$team.'</option>';
-                                }
+    						foreach($agent->primarysupervisorof->team as $team)
+    							{
+    							echo '<option value="'.$team.'">'.$team.'</option>';
+    							}
                             ?>
                         	</select>
 						</td>
-					</tr>
-					<tr id="secondarysupervisor">
-						<td>Superviseur secondaire de : </td>
+						<td><a href="doAssignPrimaryButton(this.form);"><</a>
+					<p><a href="doNotAssignPrimaryButton(this.form);">></a></td>
 						<td>
-							<select name="secondarysupervisorof[]" id="secondarysupervisorof" multiple size = 6>
+							<select style=width:200px name="supervisorteams" id="supervisorteams" multiple size = "4">
     						<?php
     						foreach($teamSearchResult->reply->content->teams->team as $team)
-                                {
-                                $found = false;
-                                foreach($agent->secondarysupervisorof->team as $selectedTeam)
-                                	{
-                                		if(strcmp($team,$selectedTeam) == 0)
-                                		{
-                                		echo '<option value="'.$team.'" selected="selected">'.$team.'</option>';
-                                		$found = true;
-                                		break;
-                                		}
-                                	}
-    						    if(!$found)	echo '<option value="'.$team.'">'.$team.'</option>';
-                                }
+    							{
+    							$found = false;
+    							
+	    						foreach($agent->primarysupervisorof->team as $agentTeam)
+	    							{
+    								if(strcmp($agentTeam,$team) == 0)
+    									{
+    									$found = true;
+    									break;
+    									}
+	    							}
+	    						if(!$found)
+	    							{
+    								foreach($agent->secondarysupervisorof->team as $agentTeam)
+		    							{
+	    								if(strcmp($agentTeam,$team) == 0)
+		    								{
+	    									$found = true;
+	    									break;
+		    								}
+		    							}
+	    							}
+	    							
+    							if(!$found)echo '<option value="'.$team.'">'.$team.'</option>';
+    							}
+                            ?>
+                        	</select>
+                        </td>
+						<td><a href="doAssignSecondaryButton(this.form);"><</a>
+					<p><a href="doNotAssignSecondaryButton(this.form);">></a></td>
+						<td>
+							<select style=width:200px name="secondarysupervisorof[]" id="secondarysupervisorof" multiple size = "4">
+    						<?php
+    						foreach($agent->secondarysupervisorof->team as $team)
+    							{
+    							echo '<option value="'.$team.'">'.$team.'</option>';
+    							}
                             ?>
                         	</select>
 						</td>
@@ -317,178 +458,70 @@ if($skillCount == 0)
 						<td><input type="checkbox" name="udplogin" id="udplogin"></td>
 					</tr>
 					<tr>
-						<td>Skill 1 : </td>
-						<td>
-							<select name ="skill1" id="skill1">
-    						<?php
-    						foreach($skillSearchResult->reply->content->skills->skill as $skill)
-                                {
-                                if(strcmp($skill,$agent->skills->skill[0]->name) == 0)
-                                	{
-                                	echo '<option value="'.$skill.'" selected="selected">'.$skill.'</option>';
-                                	}
-                                else
-                                	{
-                                	echo '<option value="'.$skill.'">'.$skill.'</option>';
-                                	}
-                                }
-                            ?>
-							</select>
-							<select name ="level1" id="level1">
-							<?php 
-							for($i=1; $i<11; $i++)
-								{
-								if(strcmp($agent->skills->skill[0]->level,strval($i)) == 0)
-									{
-									echo '<option value="'.$i.'" selected="selected">'.$i.'</option>';
-									}
-								else 
-									{
-									echo '<option value="'.$i.'">'.$i.'</option>';
-									}
-								}
-							?>
-							</select>
-							<!--<input type="button" name="add" value="+" onclick="addNewRow()">-->
-						</td>
+					  <td>
+						Compétences assignées (Skill)
+					  </td>
+					  <td></td>
+					  <td width="54%">
+						Compétences disponibles (Skill)
+					  </td>
 					</tr>
 					<tr>
-						<td>Skill 2 : </td>
-						<td>
-							<select name ="skill2" id="skill2">
-    						<?php
-    						$selectedSkill = $agent->skills->skill[1]->name;
-    						if(isset($selectedSkill))
-    							{
-    							echo '<option value="noSkill"></option>';
-    							}
-    						else
-    							{
-    							echo '<option value="noSkill" selected="selected"></option>';
-    							}
-    						
-    						foreach($skillSearchResult->reply->content->skills->skill as $skill)
-                                {
-                                if(isset($selectedSkill) && (strcmp($skill,$selectedSkill) == 0))
-                                	{
-                                	echo '<option value="'.$skill.'" selected="selected">'.$skill.'</option>';
-                                	}
-                                else
-                                	{
-                                	echo '<option value="'.$skill.'">'.$skill.'</option>';
-                                	}
-                                }
-                            ?>
-							</select>
-							<select name ="level2" id="level2">
+					  <td width="40%">
+							<select size="4" style=width:200px name="AssignedList[]" id="AssignedList" tabindex="4" onchange="changeAL()" onclick="clickAL()" multiple>
 							<?php 
-							$selectedLevel = $agent->skills->skill[1]->level;
-							for($i=1; $i<11; $i++)
+							foreach($agent->skills->skill as $skill)
 								{
-								if(isset($selectedLevel) && ($selectedLevel == $i))
-									{
-									echo '<option value="'.$i.'" selected="selected">'.$i.'</option>';
-									}
-								else 
-									{
-									echo '<option value="'.$i.'">'.$i.'</option>';
-									}
+								$displaySkill = $skill->name."(".$skill->level.")";
+								echo '<option value="'.$displaySkill.'">'.$displaySkill.'</option>';
 								}
 							?>
 							</select>
-						</td>
+					  </td>
+					  <td width="6%">
+						<a href="javascript:doAssignButton(this.form);"><</a>
+					<p><a href="javascript:doNotAssignButton(this.form);">></a>
+					  </td>
+					  <td width="54%">
+						<select size="4" style=width:200px name="NotAssignedList[]" id="NotAssignedList" tabindex="5" onchange="changeUAL()" onclick="clickUAL()" multiple>
+						<?php 
+							foreach($skillSearchResult->reply->content->skills->skill as $skill)
+								{
+								$found = false;
+								foreach($agent->skills->skill as $agentSkill)
+									{
+									if(strcmp($agentSkill->name,$skill) == 0)
+										{
+										$found = true;
+										break;
+										}
+									}
+								if(!$found)
+									{
+									echo '<option value="'.$skill.'">'.$skill.'</option>';
+									}
+								}
+							?>
+						</select>
+					  </td>
 					</tr>
 					<tr>
-						<td>Skill 3 : </td>
+						<td>Niveau de compétence : </td>
 						<td>
-							<select name ="skill3" id="skill3">
-							<?php
-    						$selectedSkill = $agent->skills->skill[2]->name;
-    						if(isset($selectedSkill))
-    							{
-    							echo '<option value="noSkill"></option>';
-    							}
-    						else
-    							{
-    							echo '<option value="noSkill" selected="selected"></option>';
-    							}
-    						
-    						foreach($skillSearchResult->reply->content->skills->skill as $skill)
-                                {
-                                if(isset($selectedSkill) && (strcmp($skill,$selectedSkill) == 0))
-                                	{
-                                	echo '<option value="'.$skill.'" selected="selected">'.$skill.'</option>';
-                                	}
-                                else
-                                	{
-                                	echo '<option value="'.$skill.'">'.$skill.'</option>';
-                                	}
-                                }
-                            ?>
-							</select>
-							<select name ="level3" id="level3">
-							<?php 
-							$selectedLevel = $agent->skills->skill[2]->level;
-							for($i=1; $i<11; $i++)
-								{
-								if(isset($selectedLevel) && ($selectedLevel == $i))
-									{
-									echo '<option value="'.$i.'" selected="selected">'.$i.'</option>';
-									}
-								else 
-									{
-									echo '<option value="'.$i.'">'.$i.'</option>';
-									}
-								}
-							?>
+							<select size="1" name="csdCL" id="csdCL" onchange="changeCL()">
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option selected="selected">5</option>
+								<option value="6">6</option>
+								<option value="7">7</option>
+								<option value="8">8</option>
+								<option value="9">9</option>
+								<option value="10">10</option>
 							</select>
 						</td>
-					</tr>
-					<tr>
-						<td>Skill 4 : </td>
-						<td>
-							<select name ="skill4" id="skill4">
-							<?php
-    						$selectedSkill = $agent->skills->skill[3]->name;
-    						if(isset($selectedSkill))
-    							{
-    							echo '<option value="noSkill"></option>';
-    							}
-    						else
-    							{
-    							echo '<option value="noSkill" selected="selected"></option>';
-    							}
-    						
-    						foreach($skillSearchResult->reply->content->skills->skill as $skill)
-                                {
-                                if(isset($selectedSkill) && (strcmp($skill,$selectedSkill) == 0))
-                                	{
-                                	echo '<option value="'.$skill.'" selected="selected">'.$skill.'</option>';
-                                	}
-                                else
-                                	{
-                                	echo '<option value="'.$skill.'">'.$skill.'</option>';
-                                	}
-                                }
-                            ?>
-							</select>
-							<select name ="level4" id="level4">
-							<?php 
-							$selectedLevel = $agent->skills->skill[3]->level;
-							for($i=1; $i<11; $i++)
-								{
-								if(isset($selectedLevel) && ($selectedLevel == $i))
-									{
-									echo '<option value="'.$i.'" selected="selected">'.$i.'</option>';
-									}
-								else 
-									{
-									echo '<option value="'.$i.'">'.$i.'</option>';
-									}
-								}
-							?>
-							</select>
-						</td>
+						<td>(1-Débutant, 10-Expert)</td>
 					</tr>
 				</table>
 			</td>
