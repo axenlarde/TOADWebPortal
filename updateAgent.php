@@ -33,10 +33,11 @@ function checkNewInput(form)
 function selectAll()
 	{
 	var list = document.getElementById('AssignedList');
-	for (var i = 0; i < list.options.length; i++)
-		{
-    	list.options[i].selected = "true";
-    	}
+	for (var i = 0; i < list.options.length; i++)list.options[i].selected = "true";
+    list = document.getElementById('primarysupervisorof');
+	for (var i = 0; i < list.options.length; i++)list.options[i].selected = "true";
+	list = document.getElementById('secondarysupervisorof');
+	for (var i = 0; i < list.options.length; i++)list.options[i].selected = "true";
 	}
 	
 function doAssignButton(t)
@@ -59,6 +60,60 @@ function doAssignButton(t)
 		$('select[id=AssignedList]').append($('<option>', { 
 			value: substring,
 			text: substring
+		}));		
+	});
+	
+	//Removes all selected items
+	selectedItems.remove();
+	}
+	
+function doAssignPrimaryButton(t)
+	{
+	var selectedItems = $('select[id=notAssignedTeams]').find(":selected");
+
+	if (selectedItems.length === 0)
+		{
+		alert ("Une équipe doit être sélectionnée");
+		return;
+		}
+	if (selectedItems.length > 50){
+		alert ("Il n'est pas possible d'associer plus de 50 équipes");
+		return;
+		}	
+	
+	$.each(selectedItems, function (i, item)
+		{
+		var txt = item.text;
+		$('select[id=primarysupervisorof]').append($('<option>', { 
+			value: txt,
+			text: txt
+		}));		
+	});
+	
+	//Removes all selected items
+	selectedItems.remove();
+	}
+	
+function doAssignSecondaryButton(t)
+	{
+	var selectedItems = $('select[id=notAssignedTeams]').find(":selected");
+
+	if (selectedItems.length === 0)
+		{
+		alert ("Une équipe doit être sélectionnée");
+		return;
+		}
+	if (selectedItems.length > 50){
+		alert ("Il n'est pas possible d'associer plus de 50 équipes");
+		return;
+		}	
+	
+	$.each(selectedItems, function (i, item)
+		{
+		var txt = item.text;
+		$('select[id=secondarysupervisorof]').append($('<option>', { 
+			value: txt,
+			text: txt
 		}));		
 	});
 	
@@ -88,6 +143,50 @@ function doNotAssignButton(t)
 			txt = txt.substring(0,idx);
 		}
 		$('select[id=NotAssignedList]').append($('<option>', { 
+			value: txt,
+			text: txt
+		}));		
+	});
+	
+	//Removes all selected items
+	selectedItems.remove();	
+	}
+	
+function doNotAssignPrimaryButton(t)
+	{
+	var selectedItems = $('select[id=primarysupervisorof]').find(":selected");
+
+	if (selectedItems.length === 0)
+		{
+		alert ("Une team doit être sélectionnée");
+		return;
+		}
+	
+	$.each(selectedItems, function (i, item) {
+		var txt = item.text;
+		$('select[id=notAssignedTeams]').append($('<option>', { 
+			value: txt,
+			text: txt
+		}));		
+	});
+	
+	//Removes all selected items
+	selectedItems.remove();	
+	}
+	
+function doNotAssignSecondaryButton(t)
+	{
+	var selectedItems = $('select[id=secondarysupervisorof]').find(":selected");
+
+	if (selectedItems.length === 0)
+		{
+		alert ("Une team doit être sélectionnée");
+		return;
+		}
+	
+	$.each(selectedItems, function (i, item) {
+		var txt = item.text;
+		$('select[id=notAssignedTeams]').append($('<option>', { 
 			value: txt,
 			text: txt
 		}));		
@@ -387,7 +486,7 @@ if($skillCount == 0)
 					<tr id="supervisorteamselectortitle">
 						<td>Superviseur principal de : </td>
 						<td></td>
-						<td></td>
+						<td>Equipes disponibles :</td>
 						<td></td>
 						<td>Superviseur secondaire de : </td>
 					</tr>
@@ -402,10 +501,12 @@ if($skillCount == 0)
                             ?>
                         	</select>
 						</td>
-						<td><a href="doAssignPrimaryButton(this.form);"><</a>
-					<p><a href="doNotAssignPrimaryButton(this.form);">></a></td>
 						<td>
-							<select style=width:200px name="supervisorteams" id="supervisorteams" multiple size = "4">
+							<a href="javascript:doAssignPrimaryButton(this.form);"><</a>
+							<p><a href="javascript:doNotAssignPrimaryButton(this.form);">></a>
+						</td>
+						<td>
+							<select style=width:200px name="notAssignedTeams" id="notAssignedTeams" multiple size = "4">
     						<?php
     						foreach($teamSearchResult->reply->content->teams->team as $team)
     							{
@@ -436,8 +537,8 @@ if($skillCount == 0)
                             ?>
                         	</select>
                         </td>
-						<td><a href="doAssignSecondaryButton(this.form);"><</a>
-					<p><a href="doNotAssignSecondaryButton(this.form);">></a></td>
+						<td><a href="javascript:doAssignSecondaryButton(this.form);">></a>
+					<p><a href="javascript:doNotAssignSecondaryButton(this.form);"><</a></td>
 						<td>
 							<select style=width:200px name="secondarysupervisorof[]" id="secondarysupervisorof" multiple size = "4">
     						<?php

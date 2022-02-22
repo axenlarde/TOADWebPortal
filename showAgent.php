@@ -111,7 +111,7 @@ else
                             {
                             echo '<tr>
                                     <td>Skill</td>
-                                    <td>'.$skill->name.':'.$skill->level.'</td>
+                                    <td>'.$skill->name.'('.$skill->level.')</td>
                                   </tr>';
                             }
                         foreach($agent->devices->device as $device)

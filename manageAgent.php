@@ -154,7 +154,7 @@ if(isset($_SESSION['search']))
 				$skills = "";
 				foreach($agent->skills->skill as $skill)
 					{
-					$skills .= $skill->name.":".$skill->level." ";
+					$skills .= $skill->name."(".$skill->level.") ";
 					}
 				
 				echo '<tr>
