@@ -18,8 +18,4 @@ if(!$sessionFound)
 	exit;
 	}
 
-//Temp
-$_SESSION['securitytoken'] = "Toto";
-//Temp
-
 ?>

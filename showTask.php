@@ -9,7 +9,14 @@ function action(type, taskID)
 	window.location = "mainpage.php?page=taskTreatment&action="+type+"&taskID="+taskID;
 	}
 
-setTimeout(function(){window.location.reload(1);}, 5000);
+/*
+if($("#statusTask").text().includes("Terminé"))
+	{
+	setTimeout(function(){window.location.reload(1);}, 5000);
+	}*/
+
+
+var timeoutID = setTimeout(function(){window.location.reload(1);}, 5000);
 
 </script>
 
@@ -22,6 +29,7 @@ $taskID = @$_GET["taskID"];
 $request = '<xml>
 			<request>
 				<type>getTask</type>
+				<securitytoken>'.$_SESSION['securitytoken'].'</securitytoken>
 				<content>
 					<taskid>'.$taskID.'</taskid>
 				</content>
@@ -89,8 +97,8 @@ function getVerboseDesc($desc)
 <h3><div class="title">Détail de la tâche en cours : </div></h3>
 <table>
 	<tr>
-		<td>Statut de la tâche : <?php echo getVerboseStatus($task->status); ?></td>
-		<td></td>
+		<td>Statut de la tâche : </td>
+		<td id="statusTask"><?php echo getVerboseStatus($task->status); ?></td>
 		<td></td>
 	</tr>
 	<tr>
@@ -105,7 +113,7 @@ function getVerboseDesc($desc)
 		<tr>
 			<td>Type</td>
 			<td>Information</td>
-			<td>Status</td>
+			<td>Statut</td>
 			<td>Description</td>
 		</tr>
 		<?php

@@ -396,14 +396,14 @@ function getVerboseDesc($desc)
 					</tr>
 					<tr>
 					  <td width="40%">
-							<select size="4" style=width:200px name="AssignedList[]" id="AssignedList" tabindex="4" onchange="changeAL()" onclick="clickAL()" multiple></select>
+							<select size="4" style=width:250px name="AssignedList[]" id="AssignedList" tabindex="4" onchange="changeAL()" onclick="clickAL()" multiple></select>
 					  </td>
 					  <td width="6%">
 						<a href="javascript:doAssignButton(this.form);"><</a>
 					<p><a href="javascript:doNotAssignButton(this.form);">></a>
 					  </td>
 					  <td width="54%">
-						<select size="4" style=width:200px name="NotAssignedList[]" id="NotAssignedList" tabindex="5" onchange="changeUAL()" onclick="clickUAL()" multiple>
+						<select size="4" style=width:250px name="NotAssignedList[]" id="NotAssignedList" tabindex="5" onchange="changeUAL()" onclick="clickUAL()" multiple>
 						<?php 
 							foreach($skillSearchResult->reply->content->skills->skill as $skill)
 								{

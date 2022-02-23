@@ -8,7 +8,7 @@ include "sessionFound.php";
 $PHFileName = "";
 $PHFile = "";
 
-if(isset($_GET['phfilename']) && isset($_GET['script']))
+if(isset($_GET['phfilename']) && isset($_GET['customer']))
 	{
 	$PHFileName = $_GET['phfilename'];
 	$PHFile = simplexml_load_file("document/xmlFiles/".$PHFileName) or die("Error");
@@ -51,7 +51,7 @@ else if((isset($_GET["dateToRemove"])) && ($_GET["dateToRemove"] != ""))
 	}
 
 //To go back to the public holidays administration page
-header("Location: mainpage.php?page=manageHolidays&script=".$_GET['script']);
+header("Location: mainpage.php?page=manageHolidays&customer=".$_GET['customer']);
 exit;
 
 ?>

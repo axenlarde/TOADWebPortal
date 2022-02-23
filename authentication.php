@@ -1,11 +1,8 @@
 <?php
 session_start();
+$url = 'http://127.0.0.1:8092/TOAD/';
 /****
- * File used to authenticate users once they have submit the form
- * 
- * We are going to get here the login and password of the user and then find
- * them in the user xml file. If we find the user the access is granted. If not the
- * user is redirected to authentication page
+ * Used to authenticate users once they have submited the form
  */
 ?>
 
@@ -17,40 +14,56 @@ session_start();
 
 $login = $_POST['login'];
 $password = $_POST['password'];
-//we need the MD5 hash of the password
-$password = md5($password);
 
-//We read the xml file
-$xml=simplexml_load_file("document/users.xml") or die("Error");
-$users = $xml->user;//Users is an array of user
+//First we try to authenticate using the CUCM
+$request = '<xml>
+				<request>
+					<type>doAuthenticate</type>
+					<content>
+						<userid>'.$login.'</userid>
+						<userpassword>'.$password.'</userpassword>
+					</content>
+				</request>
+			</xml>';
 
-foreach($users as $user)
+$context = stream_context_create(
+	array(
+		'http' => array(
+			'method' => 'POST',
+			'header' => 'Content-type: text/xml',
+			'content' => $request))
+	);
+
+$resp = @file_get_contents($url, FALSE, $context);
+
+if($resp === false)
 	{
-	if($login == $user->userid)
-		{
-		if($password == $user->password)
-			{
-			$tab = array();
-			$tab[0] = (string) $user->userid;
-			$tab[1] = (string) $user->lastname;
-			$tab[2] = (string) $user->firstname;
-			$tab[3] = (string) $user->accessgroup;
-			
-			$_SESSION['login'] = $tab;
-			
-			header("Location: mainpage.php?page=branchMainAdmin");
-			exit;
-			}
-		else
-			{
-			header("Location: mainpage.php?authenticationError=badPassword&login=".$login);
-			exit;
-			}
-		}
+	header("Location: mainpage.php?authenticationError=failedToAuthenticate&login=".$login);
+	exit;
+	}
+
+//We open the xml content as String
+$searchResult = simplexml_load_string($resp);
+
+//We get the securityToken
+$token = @(String) $searchResult->reply->content->securitytoken;
+echo $token;
+if((isset($token)) && (!empty($token)))
+	{
+	$tab = array();
+	$tab[0] = $login;
+	$tab[1] = "lastname";
+	$tab[2] = "firstname";
+	$tab[3] = "Normale";
+	$_SESSION['login'] = $tab;
+	$_SESSION['securitytoken'] = $token;
+	
+	header("Location: mainpage.php?page=branchMainAdmin");
+	exit;
 	}
 
 //If we reach this point we return to the mainpage
-header("Location: mainpage.php?authenticationError=badLogin");
+header("Location: mainpage.php?authenticationError=failedToAuthenticate&login=".$login);
 exit;
 ?>
 

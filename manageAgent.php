@@ -11,7 +11,10 @@ function updateItem(id)
 
 function deleteItem(id)
 	{
-	window.location = "agentTreatment.php?action=delete&userID="+id;
+	if(confirm("Etes-vous sûr de vouloir supprimer l'utilisateur "+id+"?"))
+		{
+		window.location = "agentTreatment.php?action=delete&userID="+id;
+		}
 	}
 
 function showItem(id)

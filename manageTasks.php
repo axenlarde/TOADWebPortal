@@ -12,7 +12,8 @@ include "sessionFound.php";
 
 $request = '<xml>
 			<request>
-				<type>copyLogFile</type>
+				<type>listTask</type>
+				<securitytoken>'.$_SESSION['securitytoken'].'</securitytoken>
 				<content></content>
 			</request>
 		</xml>';
@@ -30,32 +31,27 @@ $resp = file_get_contents($url, FALSE, $context);
 //Finally we open the xml content as String
 $searchResult = simplexml_load_string($resp);
 
-$ok = false;
-
-if($searchResult->reply->type == "success")
-	{
-	$ok = true;
-	}
+$taskCount = count($searchResult->reply->content->tasks->task);
 
 ?>
-<h3><div class="navibar"><a href="mainpage.php?page=branchMainAdmin">Retour</a>>Afficher les logs</div></h3>
+<h3><div class="navibar"><a href="mainpage.php?page=branchMainAdmin">Retour</a>>Afficher les tâches</div></h3>
 <br>
 <table class="mainmenu">
 <?php 
-if(!$ok)
+if($taskCount == 0)
 	{
-	echo 'Aucun log à afficher';
+	echo 'L\'historique des tâches est vide pour l\'instant';
 	}
 else
 	{
-	echo '
-		<tr>
-			<td><a href="log/PERCELER_LogFile.txt">Fichier 1</a></td>
-		</tr>
-		<tr>
-			<td><a href="log/PERCELER_LogFile.txt.1">Fichier 2</a></td>
-		</tr>
-		';
+	foreach($searchResult->reply->content->tasks->task as $task)
+		{
+		echo '
+			<tr>
+				<td><a href="mainpage.php?page=showTask&taskID='.$task->taskid.'">'.$task->desc.' : '.$task->status.'</a></td>
+			</tr>
+			';
+		}
 	}
 ?>
 </table>

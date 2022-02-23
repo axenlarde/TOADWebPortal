@@ -8,7 +8,7 @@ include "sessionFound.php";
 $SFileName = "";
 $SFile = "";
 
-if(isset($_GET['sfilename']) && isset($_GET['script']))
+if(isset($_GET['sfilename']) && isset($_GET['customer']))
 	{
 	$SFileName = $_GET['sfilename'];
 	$SFile = simplexml_load_file("document/xmlFiles/".$SFileName) or die("Error");
@@ -27,7 +27,7 @@ if(isset($_POST['maxwaitingtime']))
 	}
 
 //To go back to the public holidays administration page
-header("Location: mainpage.php?page=manageSettings&script=".$_GET['script']);
+header("Location: mainpage.php?page=manageSettings&customer=".$_GET['customer']);
 exit;
 
 ?>

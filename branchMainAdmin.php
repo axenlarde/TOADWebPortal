@@ -8,7 +8,9 @@ include "sessionFound.php";
 
 <table class="mainmenu">
 	<tr><td><a href="mainpage.php?page=manageAgent">Gestion des agents</a></td></tr>
-	<tr><td><a href="mainpage.php?page=manageScripts">Gestion des scripts</a></td></tr>
+	<tr><td><a href="mainpage.php?page=manageCustomers">Gestion des clients</a></td></tr>
+	<tr><td><a href="mainpage.php?page=manageTasks">Afficher les tâches précédentes</a></td></tr>
+	<tr><td><a href="mainpage.php?page=displayLogs">Afficher les logs</a></td></tr>
 	<?php
 	
 	//If the user is an admin we display the "user admin menu"
@@ -18,8 +20,7 @@ include "sessionFound.php";
 		{
 		//This user is an admin
 		echo '
-			<tr><td><a href="mainpage.php?page=adminUsers">Gestion des administrateurs</a></td></tr>
-            <tr><td><a href="mainpage.php?page=displayLog">Afficher les logs</a></td></tr>
+            <tr><td><a href="mainpage.php?page=displayLogs">Afficher les logs</a></td></tr>
 			';
 		}
 	?>

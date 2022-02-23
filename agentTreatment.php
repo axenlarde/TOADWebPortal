@@ -124,6 +124,7 @@ else if((isset($_GET["action"])) && ($_GET["action"] == "delete"))
 	$request = "<xml>
                     <request>
                     <type>deleteAgent</type>
+                    <securitytoken>".$_SESSION['securitytoken']."</securitytoken>
                     <content>
                     	<agent>
                         	<userid>".$userID."</userid>
@@ -154,6 +155,24 @@ else if((isset($_GET["action"])) && ($_GET["action"] == "delete"))
 function parseReply($resp)
     {
     $reply = simplexml_load_string($resp);
+    
+    //We check if we got an error
+    if(isset($reply->reply->content->error))
+    	{
+    	$message = "generalerror";
+    	if(stripos($reply->reply->content->error,"userID already exists") !== false)
+    		{
+    		$message = "useridnotavailable";
+    		}
+    	else if(stripos($reply->reply->content->error,"line already exists") !== false)
+    		{
+    		$message = "linenotavailable";
+    		}
+    		
+    	header("Location: mainpage.php?page=manageAgent&message=".$message);
+    	exit;
+    	}
+    
     return $reply->reply->content->taskid;
     }
 

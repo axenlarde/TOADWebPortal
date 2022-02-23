@@ -4,14 +4,14 @@
 //We use the following to notify the user about a wrong entry
 function interpreteError()
 	{
-	var wrongPassword = getUrlVars()["authenticationError"];
-	if(wrongPassword == "badLogin")
+	var reason = getUrlVars()["authenticationError"];
+	if(reason == "failedToAuthenticate")
 		{
-		enlightLogin();
+		alert("Connexion refusée");
 		}
-	else if(wrongPassword == "badPassword")
+	else
 		{
-		enlightPassword();
+		alert("Connexion refusée");
 		}
 	}
 
@@ -19,7 +19,7 @@ function submitForm(e, formulaire)
 	{
 	if((e.keyCode == 13) || (e.which == 13))
 		{
-		document.getElementById("fconnexion").submit();
+		verif(formulaire);
 		}
 	}
 
@@ -76,7 +76,7 @@ function getUrlVars()
 <p><b>Veuillez vous identifier pour accéder au portail : </b></p>
 
 <div class="newTechGuyTable">
-<form name="fconnexion" id="fconnexion" method=post action="authentication.php" onkeypress="submitForm(event)">
+<form name="fconnexion" id="fconnexion" method=post action="authentication.php" onkeypress="submitForm(event, this.form)">
 	<table>
 		<tr>
 			<td><b>Login : </b></td>
@@ -100,23 +100,18 @@ function getUrlVars()
 <script type="text/javascript">
 
 //We use the following to notify the user about a wrong entry
-var wrongPassword = getUrlVars()["authenticationError"];
+var reason = getUrlVars()["authenticationError"];
 var login = getUrlVars()["login"];
 if(window.location.href.indexOf("login") == -1)
 	{
 	login = "";
 	}
 
-if(wrongPassword == "badLogin")
+if(reason == "failedToAuthenticate")
 	{
-	enlightLogin();
-	}
-else if(wrongPassword == "badPassword")
-	{
-	enlightPassword();
 	document.getElementById("loginInput").value = login;
-	}
-	
+	alert("Connexion refusée");
+	}	
 
 </script>
 

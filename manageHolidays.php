@@ -45,16 +45,18 @@ $(function()
  * Page used to set the closure days
  */
 $PHFileName = "";
-if(isset($_GET["script"]) && ($_GET["script"] != ''))
+$selectedCustomer;
+if(isset($_GET["customer"]) && ($_GET["customer"] != ''))
 	{
 	//First we read the xml file
-	$scriptList = simplexml_load_file("document/scripts.xml") or die("Error");
-	//Then we take only the file we need for the given script
-	foreach ($scriptList->scripts->script as $script)
+	$customerList = simplexml_load_file("document/customers.xml") or die("Error");
+	//Then we take only the file we need for the given customer
+	foreach ($customerList->customers->customer as $customer)
 		{
-		if(strcmp($script->name,$_GET["script"]) == 0)
+		if(strcmp($customer->name,$_GET["customer"]) == 0)
 			{
-			$PHFileName = $script->publicholiday;
+			$PHFileName = $customer->publicholiday;
+			$selectedCustomer = $customer;
 			break;
 			}
 		}
@@ -71,11 +73,11 @@ $PHFile = simplexml_load_file("document/xmlFiles/".$PHFileName) or die("Error");
 ?>
 <h3><div class="navibar"><a href="mainpage.php?page=branchMainAdmin">Retour</a>
 >
-<a href="mainpage.php?page=manageScripts">Gestion des scripts</a>
->Gestion des jours de fermeture : <?php echo $_GET["script"];?></div></h3>
+<a href="mainpage.php?page=manageCustomers">Gestion des Client</a>
+>Gestion des jours de fermeture : <?php echo $selectedCustomer->customer;?></div></h3>
 <br>
 <h4>Liste actuelle des jours de fermeture : </h4>
-<form name="holidaysForm" id="holidaysForm" method=post action="<?php echo "holidaysTreatment.php?phfilename=".$PHFileName."&script=".$_GET["script"];?>">
+<form name="holidaysForm" id="holidaysForm" method=post action="<?php echo "holidaysTreatment.php?phfilename=".$PHFileName."&customer=".$_GET["customer"];?>">
 <table>
 	<?php
 	/**

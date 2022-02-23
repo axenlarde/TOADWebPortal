@@ -34,6 +34,8 @@ function displayMessage()
 		if(message == "unknowntaskid")alert("La tâche demandée n'existe pas");
 		else if(message == "maxtaskreached")alert("Vous ne pouvez pas lancer de nouvelle tâche\r\nLe maximum en simultané a été atteint");
 		else if(message == "generalerror")alert("Une erreur s'est produite\r\nVeuillez réessayer ou contactez l'administrateur");
+		else if(message == "useridnotavailable")alert("Le userID mentionné existe déja");
+		else if(message == "linenotavailable")alert("La ligne mentionnée existe déja");
 		}
 	}
 
@@ -53,21 +55,10 @@ function displayMessage()
 	<div class="entete">
 		<table style="width: 100%">
 			<tr>
+				<td><img src="LogoSD.png" alt="Logo SD" width="80" height="80"></td>
 				<td><h1>Portail d'administration du centre d'appel</h1></td>
 			</tr>
 <?php
-//Cart content display
-if(isset($_SESSION['cart']))
-	{
-	if(!empty($_SESSION['cart']))
-		{
-		echo '<tr>
-			<td><div style="color: white; font-weight: bold; text-align: right;">Taille du panier : '.count($_SESSION['cart']).'</div></td>
-			</tr>
-			';
-		}
-	}
-
 //Connected user
 $connected = false;
     
@@ -77,14 +68,14 @@ if(isset($_SESSION['login']))
 		{
 		$connected = true;
 		
-		echo"
+		echo'
 			<tr>
-				<td><div style=\"color: white; font-weight: bold; text-align: right;\">Connecté avec le compte : ".$_SESSION['login'][0]."</div></td>
+				<td></td><td><div style="color: white; font-weight: bold; text-align: right;">Connecté avec le compte : '.$_SESSION['login'][0].'</div></td>
 			</tr>
 			<tr>
-				<td><div style=\"text-align: right;\"><a href=\"mainpage.php\" style=\"color: white;\">Se déconnecter</a></div></td>
+				<td></td><td><div style="text-align: right;"><a href="mainpage.php" style="color: white;">Se déconnecter</a></div></td>
 			</tr>
-		";
+		';
 		}
 	}
 

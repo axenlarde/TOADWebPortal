@@ -12,7 +12,7 @@ $fileFound = false;
 $dayIndex = 2; //Monday in the xml file
 $dayNames = array("Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi","Dimanche");
 
-if(isset($_GET['ohfilename']) && isset($_GET['script']))
+if(isset($_GET['ohfilename']) && isset($_GET['customer']))
 	{
 	$OHFileName = $_GET['ohfilename'];
 	$OHFile = simplexml_load_file("document/xmlFiles/".$OHFileName) or die("Error");
@@ -107,7 +107,7 @@ if($fileFound)
 	}
 
 //To go back to the opening hours administration page
-header("Location: mainpage.php?page=manageHours&script=".$_GET['script']);
+header("Location: mainpage.php?page=manageHours&customer=".$_GET['customer']);
 exit;
 
 ?>

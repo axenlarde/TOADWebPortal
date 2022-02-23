@@ -569,7 +569,7 @@ if($skillCount == 0)
 					</tr>
 					<tr>
 					  <td width="40%">
-							<select size="4" style=width:200px name="AssignedList[]" id="AssignedList" tabindex="4" onchange="changeAL()" onclick="clickAL()" multiple>
+							<select size="4" style=width:250px name="AssignedList[]" id="AssignedList" tabindex="4" onchange="changeAL()" onclick="clickAL()" multiple>
 							<?php 
 							foreach($agent->skills->skill as $skill)
 								{
@@ -584,7 +584,7 @@ if($skillCount == 0)
 					<p><a href="javascript:doNotAssignButton(this.form);">></a>
 					  </td>
 					  <td width="54%">
-						<select size="4" style=width:200px name="NotAssignedList[]" id="NotAssignedList" tabindex="5" onchange="changeUAL()" onclick="clickUAL()" multiple>
+						<select size="4" style=width:250px name="NotAssignedList[]" id="NotAssignedList" tabindex="5" onchange="changeUAL()" onclick="clickUAL()" multiple>
 						<?php 
 							foreach($skillSearchResult->reply->content->skills->skill as $skill)
 								{

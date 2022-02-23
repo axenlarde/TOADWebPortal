@@ -1,0 +1,277 @@
+<!--File used to list customer and their associated documents
+-->
+
+<xml>
+	<customers>
+		<customer>
+			<name>0</name>
+			<team>Sante</team>
+			<customer>CHU</customer>
+			<desc>CHU</desc>
+			<openinghours>CHU/OpeningHours.xml</openinghours>
+			<publicholiday>CHU/PublicHoliday.xml</publicholiday>
+			<settings>CHU/OverallSettings.xml</settings>
+		</customer>
+		<customer>
+			<name>1</name>
+			<team>Sante</team>
+			<customer>IUC</customer>
+			<desc>IUC</desc>
+			<openinghours>IUC/OpeningHours.xml</openinghours>
+			<publicholiday>IUC/PublicHoliday.xml</publicholiday>
+			<settings>IUC/OverallSettings.xml</settings>
+		</customer>
+		<customer>
+			<name>2</name>
+			<team>Areva</team>
+			<customer>Areva</customer>
+			<desc>Areva</desc>
+			<openinghours>Areva/OpeningHours.xml</openinghours>
+			<publicholiday>Areva/PublicHoliday.xml</publicholiday>
+			<settings>Areva/OverallSettings.xml</settings>
+		</customer>
+		<customer>
+			<name>3</name>
+			<team>RTE</team>
+			<customer>RTE</customer>
+			<desc>RTE</desc>
+			<openinghours>RTE/OpeningHours.xml</openinghours>
+			<publicholiday>RTE/PublicHoliday.xml</publicholiday>
+			<settings>RTE/OverallSettings.xml</settings>
+		</customer>
+		<customer>
+			<name>4</name>
+			<team>FMSD</team>
+			<customer>AIRBUS DS</customer>
+			<desc>AIRBUS DS</desc>
+			<openinghours>AIRBUS DS/OpeningHours.xml</openinghours>
+			<publicholiday>AIRBUS DS/PublicHoliday.xml</publicholiday>
+			<settings>AIRBUS DS/OverallSettings.xml</settings>
+		</customer>
+		<customer>
+			<name>5</name>
+			<team>FMSD</team>
+			<customer>ASTREINTE SC</customer>
+			<desc>ASTREINTE SC</desc>
+			<openinghours>ASTREINTE SC/OpeningHours.xml</openinghours>
+			<publicholiday>ASTREINTE SC/PublicHoliday.xml</publicholiday>
+			<settings>ASTREINTE SC/OverallSettings.xml</settings>
+		</customer>
+		<customer>
+			<name>6</name>
+			<team>FMSD</team>
+			<customer>EUROPA SPIE MOYENS GENERAUX</customer>
+			<desc>EUROPA SPIE MOYENS GENERAUX</desc>
+			<openinghours>EUROPA SPIE MOYENS GENERAUX/OpeningHours.xml</openinghours>
+			<publicholiday>EUROPA SPIE MOYENS GENERAUX/PublicHoliday.xml</publicholiday>
+			<settings>EUROPA SPIE MOYENS GENERAUX/OverallSettings.xml</settings>
+		</customer>
+		<customer>
+			<name>7</name>
+			<team>FMSD</team>
+			<customer>FDR DIACONESSES</customer>
+			<desc>FDR DIACONESSES</desc>
+			<openinghours>FDR DIACONESSES/OpeningHours.xml</openinghours>
+			<publicholiday>FDR DIACONESSES/PublicHoliday.xml</publicholiday>
+			<settings>FDR DIACONESSES/OverallSettings.xml</settings>
+		</customer>
+		<customer>
+			<name>8</name>
+			<team>FMSD</team>
+			<customer>SCRIPT SC</customer>
+			<desc>SCRIPT SC</desc>
+			<openinghours>SCRIPT SC/OpeningHours.xml</openinghours>
+			<publicholiday>SCRIPT SC/PublicHoliday.xml</publicholiday>
+			<settings>SCRIPT SC/OverallSettings.xml</settings>
+		</customer>
+		<customer>
+			<name>9</name>
+			<team>FMSD</team>
+			<customer>SIS</customer>
+			<desc>SIS</desc>
+			<openinghours>SIS/OpeningHours.xml</openinghours>
+			<publicholiday>SIS/PublicHoliday.xml</publicholiday>
+			<settings>SIS/OverallSettings.xml</settings>
+		</customer>
+		<customer>
+			<name>10</name>
+			<team>FMSD</team>
+			<customer>TECH OPERATEUR</customer>
+			<desc>TECH OPERATEUR</desc>
+			<openinghours>TECH OPERATEUR/OpeningHours.xml</openinghours>
+			<publicholiday>TECH OPERATEUR/PublicHoliday.xml</publicholiday>
+			<settings>TECH OPERATEUR/OverallSettings.xml</settings>
+		</customer>
+		<customer>
+			<name>11</name>
+			<team>FMSD</team>
+			<customer>TELVIEW H24</customer>
+			<desc>TELVIEW H24</desc>
+			<openinghours>TELVIEW H24/OpeningHours.xml</openinghours>
+			<publicholiday>TELVIEW H24/PublicHoliday.xml</publicholiday>
+			<settings>TELVIEW H24/OverallSettings.xml</settings>
+		</customer>
+		<customer>
+			<name>12</name>
+			<team>FMSD</team>
+			<customer>TELVIEW HO</customer>
+			<desc>TELVIEW HO</desc>
+			<openinghours>TELVIEW HO/OpeningHours.xml</openinghours>
+			<publicholiday>TELVIEW HO/PublicHoliday.xml</publicholiday>
+			<settings>TELVIEW HO/OverallSettings.xml</settings>
+		</customer>
+		<customer>
+			<name>13</name>
+			<team>FMSD</team>
+			<customer>TELVIEW TECH</customer>
+			<desc>TELVIEW TECH</desc>
+			<openinghours>TELVIEW TECH/OpeningHours.xml</openinghours>
+			<publicholiday>TELVIEW TECH/PublicHoliday.xml</publicholiday>
+			<settings>TELVIEW TECH/OverallSettings.xml</settings>
+		</customer>
+		<customer>
+			<name>14</name>
+			<team>FMSD</team>
+			<customer>TOTAL</customer>
+			<desc>TOTAL</desc>
+			<openinghours>TOTAL/OpeningHours.xml</openinghours>
+			<publicholiday>TOTAL/PublicHoliday.xml</publicholiday>
+			<settings>TOTAL/OverallSettings.xml</settings>
+		</customer>
+		<customer>
+			<name>15</name>
+			<team>FMSD</team>
+			<customer>Centre de Vaccination</customer>
+			<desc>Centre de Vaccination</desc>
+			<openinghours>Centre de Vaccination/OpeningHours.xml</openinghours>
+			<publicholiday>Centre de Vaccination/PublicHoliday.xml</publicholiday>
+			<settings>Centre de Vaccination/OverallSettings.xml</settings>
+		</customer>
+		<customer>
+			<name>16</name>
+			<team>FMSD</team>
+			<customer>CNSA</customer>
+			<desc>CNSA</desc>
+			<openinghours>CNSA/OpeningHours.xml</openinghours>
+			<publicholiday>CNSA/PublicHoliday.xml</publicholiday>
+			<settings>CNSA/OverallSettings.xml</settings>
+		</customer>
+		<customer>
+			<name>17</name>
+			<team>SPIE</team>
+			<customer>Segment France</customer>
+			<desc>Segment France</desc>
+			<openinghours>Segment France/OpeningHours.xml</openinghours>
+			<publicholiday>Segment France/PublicHoliday.xml</publicholiday>
+			<settings>Segment France/OverallSettings.xml</settings>
+		</customer>
+		<customer>
+			<name>18</name>
+			<team>SPIE</team>
+			<customer>Segment VIP</customer>
+			<desc>Segment VIP</desc>
+			<openinghours>Segment VIP/OpeningHours.xml</openinghours>
+			<publicholiday>Segment VIP/PublicHoliday.xml</publicholiday>
+			<settings>Segment VIP/OverallSettings.xml</settings>
+		</customer>
+		<customer>
+			<name>19</name>
+			<team>SPIE</team>
+			<customer>SPIE Europa</customer>
+			<desc>SPIE Europa</desc>
+			<openinghours>SPIE Europa/OpeningHours.xml</openinghours>
+			<publicholiday>SPIE Europa/PublicHoliday.xml</publicholiday>
+			<settings>SPIE Europa/OverallSettings.xml</settings>
+		</customer>
+		<customer>
+			<name>20</name>
+			<team>Mutualisé</team>
+			<customer>ASEI</customer>
+			<desc>ASEI</desc>
+			<openinghours>ASEI/OpeningHours.xml</openinghours>
+			<publicholiday>ASEI/PublicHoliday.xml</publicholiday>
+			<settings>ASEI/OverallSettings.xml</settings>
+		</customer>
+		<customer>
+			<name>21</name>
+			<team>Mutualisé</team>
+			<customer>CD73</customer>
+			<desc>CD73</desc>
+			<openinghours>CD73/OpeningHours.xml</openinghours>
+			<publicholiday>CD73/PublicHoliday.xml</publicholiday>
+			<settings>CD73/OverallSettings.xml</settings>
+		</customer>
+		<customer>
+			<name>22</name>
+			<team>Mutualisé</team>
+			<customer>CORTEO SE</customer>
+			<desc>CORTEO SE</desc>
+			<openinghours>CORTEO SE/OpeningHours.xml</openinghours>
+			<publicholiday>CORTEO SE/PublicHoliday.xml</publicholiday>
+			<settings>CORTEO SE/OverallSettings.xml</settings>
+		</customer>
+		<customer>
+			<name>23</name>
+			<team>Mutualisé</team>
+			<customer>INERIS</customer>
+			<desc>INERIS</desc>
+			<openinghours>INERIS/OpeningHours.xml</openinghours>
+			<publicholiday>INERIS/PublicHoliday.xml</publicholiday>
+			<settings>INERIS/OverallSettings.xml</settings>
+		</customer>
+		<customer>
+			<name>24</name>
+			<team>Mutualisé</team>
+			<customer>LBA</customer>
+			<desc>LBA</desc>
+			<openinghours>LBA/OpeningHours.xml</openinghours>
+			<publicholiday>LBA/PublicHoliday.xml</publicholiday>
+			<settings>LBA/OverallSettings.xml</settings>
+		</customer>
+		<customer>
+			<name>25</name>
+			<team>Mutualisé</team>
+			<customer>Maire de Blagnac</customer>
+			<desc>Maire de Blagnac</desc>
+			<openinghours>Maire de Blagnac/OpeningHours.xml</openinghours>
+			<publicholiday>Maire de Blagnac/PublicHoliday.xml</publicholiday>
+			<settings>Maire de Blagnac/OverallSettings.xml</settings>
+		</customer>
+		<customer>
+			<name>26</name>
+			<team>Mutualisé</team>
+			<customer>Centrale envergure</customer>
+			<desc>Centrale envergure</desc>
+			<openinghours>Centrale envergure/OpeningHours.xml</openinghours>
+			<publicholiday>Centrale envergure/PublicHoliday.xml</publicholiday>
+			<settings>Centrale envergure/OverallSettings.xml</settings>
+		</customer>
+		<customer>
+			<name>27</name>
+			<team>Mutualisé</team>
+			<customer>Horizon Achats</customer>
+			<desc>Horizon Achats</desc>
+			<openinghours>Horizon Achats/OpeningHours.xml</openinghours>
+			<publicholiday>Horizon Achats/PublicHoliday.xml</publicholiday>
+			<settings>Horizon Achats/OverallSettings.xml</settings>
+		</customer>
+		<customer>
+			<name>28</name>
+			<team>Mutualisé</team>
+			<customer>COCKPIT(anciennement IPME_AIR)</customer>
+			<desc>COCKPIT(anciennement IPME_AIR)</desc>
+			<openinghours>COCKPIT(anciennement IPME_AIR)/OpeningHours.xml</openinghours>
+			<publicholiday>COCKPIT(anciennement IPME_AIR)/PublicHoliday.xml</publicholiday>
+			<settings>COCKPIT(anciennement IPME_AIR)/OverallSettings.xml</settings>
+		</customer>
+		<customer>
+			<name>29</name>
+			<team>Mutualisé</team>
+			<customer>ATR</customer>
+			<desc>ATR</desc>
+			<openinghours>ATR/OpeningHours.xml</openinghours>
+			<publicholiday>ATR/PublicHoliday.xml</publicholiday>
+			<settings>ATR/OverallSettings.xml</settings>
+		</customer>
+	</customers>
+</xml>
