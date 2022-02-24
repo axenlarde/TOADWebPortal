@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--
+File used to define all the global parameters
+-->
+<xml>
+	<branch>
+		<name>Vins</name>
+		<routepoint>911030</routepoint><!--Associated route point number-->
+		<enablegreetingprompt>false</enablegreetingprompt><!--Enable the greeting prompt-->
+		<enabledissuasionprompt>true</enabledissuasionprompt><!--Enable the dissuasion prompt-->
+		<openinghours>OpeningHours_Vins.xml</openinghours><!--Name of the opening hours file-->
+		<publicholiday>PublicHoliday_Vins.xml</publicholiday><!--Name of the public holiday file-->
+		<incomingcallsdetection>
+			<enable>true</enable>
+			<list>IncomingCallsList_Vins.xml</list><!--Name of the incoming calls list file-->
+		</incomingcallsdetection>
+		<prioritytag>PriorityTagList_Vins.xml</prioritytag><!--Name of the prioritytag file-->
+		<maxwaitingtime>60</maxwaitingtime><!--Max waiting time for this branch. It has to be a simple number-->
+		<redirecttovoicemail>true</redirecttovoicemail><!--Redirect to voicemail if closed-->
+		<maxcallqueuesize>
+			<enable>false</enable>
+			<size>10</size>
+		</maxcallqueuesize>
+		<layoutlistname>Vins_AU</layoutlistname><!--Layout list name-->
+	</branch>
+</xml>
