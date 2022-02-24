@@ -9,10 +9,6 @@ function checkNewInput(form)
 	{
 	if(document.getElementById("lastname").value == "")
 		{
-		alert("Le prénom est obligatoire");
-		}
-	else if(document.getElementById("firstname").value == "")
-		{
 		alert("Le nom est obligatoire");
 		}
 	else if((document.getElementById("devicename").value != "") && (!document.getElementById("devicename").value.match(/^[0-9A-F]{12}$/)))
@@ -284,14 +280,6 @@ if($ucpCount == 0)
    	header('Location: mainpage.php?page=branchMainAdmin&message=generalerror');
    	exit;
     }
-    
-function getVerboseDesc($desc)
-    {
-    if($desc == "addAgent") return '<option value="'.$desc.'" selected="selected">Agent normal</option>';
-    else if($desc == "addRemoteAgent") return '<option value="'.$desc.'">Agent télétravail</option>';
-    
-    return '';
-    }
 ?>
 
 <h3>
@@ -311,19 +299,6 @@ function getVerboseDesc($desc)
 		<tr>
 			<td>
 				<table id="userForm">
-					<tr>
-						<td>Profile de création* : </td>
-						<td>
-							<select name="ucp" id="ucp">
-    						<?php
-    						foreach($ucpSearchResult->reply->content->ucps->ucp as $ucp)
-                                {
-                                echo getVerboseDesc($ucp->name);
-                                }
-                            ?>
-                        	</select>
-						</td>
-					</tr>
 					<tr>
 						<td>Team* : </td>
 						<td>
@@ -346,7 +321,7 @@ function getVerboseDesc($desc)
 						<td><input type="text" name="lastname" id="lastname"></td>
 					</tr>
 					<tr>
-						<td>Prénom* : </td>
+						<td>Prénom : </td>
 						<td><input type="text" name="firstname" id="firstname"></td>
 					</tr>
 					<tr>

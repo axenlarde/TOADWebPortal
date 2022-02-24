@@ -15,7 +15,14 @@ $url = 'http://127.0.0.1:8092/TOAD/';
 $login = $_POST['login'];
 $password = $_POST['password'];
 
-//First we try to authenticate using the CUCM
+//Some special caracters are not supported by XML so we escape them as it is common to use some in password
+$password = str_replace("&", "&#38;", $password);
+$password = str_replace("<", "&#60;", $password);
+$password = str_replace(">", "&#62;", $password);
+$password = str_replace("'", "&#39;", $password);
+$password = str_replace("\"", "&#34;", $password);
+
+//We try to authenticate using the CUCM
 $request = '<xml>
 				<request>
 					<type>doAuthenticate</type>

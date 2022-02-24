@@ -15,11 +15,11 @@ function interpreteError()
 		}
 	}
 
-function submitForm(e, formulaire)
+function submitForm(e)
 	{
 	if((e.keyCode == 13) || (e.which == 13))
 		{
-		verif(formulaire);
+		document.getElementById("fconnexion").submit();
 		}
 	}
 
@@ -76,17 +76,17 @@ function getUrlVars()
 <p><b>Veuillez vous identifier pour accéder au portail : </b></p>
 
 <div class="newTechGuyTable">
-<form name="fconnexion" id="fconnexion" method=post action="authentication.php" onkeypress="submitForm(event, this.form)">
+<form name="fconnexion" id="fconnexion" method=post action="authentication.php" onkeypress="submitForm(event)">
 	<table>
 		<tr>
 			<td><b>Login : </b></td>
 			<td><div id="login"><input type="text" name="login" id="loginInput" onclick="inputSelect()"></div></td>
-			<td><div id="wrongLogin" style="color: red; font-weight: bold; display: none;">Login incorrect</div></td>
+			<td><div id="wrongLogin" style="color: red; font-weight: bold; display: none;">Veuillez préciser un login</div></td>
 		</tr>
 		<tr>
 			<td><b>Mot de passe : </b></td>
 			<td><div id="password"><input type="password" name="password" onclick="inputSelect()"></div></td>
-			<td><div id="wrongPass" style="color: red; font-weight: bold; display: none;">Mot de passe incorrect</div></td>
+			<td><div id="wrongPass" style="color: red; font-weight: bold; display: none;">Veuillez préciser un mot de passe</div></td>
 		</tr>
 		<tr>
 			<td></td>

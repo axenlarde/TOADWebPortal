@@ -9,10 +9,6 @@ function checkNewInput(form)
 	{
 	if(document.getElementById("lastname").value == "")
 		{
-		alert("Le prénom est obligatoire");
-		}
-	else if(document.getElementById("firstname").value == "")
-		{
 		alert("Le nom est obligatoire");
 		}
 	else if((document.getElementById("devicename").value != "") && (!document.getElementById("devicename").value.match(/^[0-9A-F]{12}$/)))
@@ -34,10 +30,10 @@ function selectAll()
 	{
 	var list = document.getElementById('AssignedList');
 	for (var i = 0; i < list.options.length; i++)list.options[i].selected = "true";
-    list = document.getElementById('primarysupervisorof');
-	for (var i = 0; i < list.options.length; i++)list.options[i].selected = "true";
-	list = document.getElementById('secondarysupervisorof');
-	for (var i = 0; i < list.options.length; i++)list.options[i].selected = "true";
+    //list = document.getElementById('primarysupervisorof');
+	//for (var i = 0; i < list.options.length; i++)list.options[i].selected = "true";
+	//list = document.getElementById('secondarysupervisorof');
+	//for (var i = 0; i < list.options.length; i++)list.options[i].selected = "true";
 	}
 	
 function doAssignButton(t)
@@ -272,8 +268,12 @@ function hide()
 		}
 	else
 		{
+		document.getElementById("supervisorteamselector").style.display="none";
+		document.getElementById("supervisorteamselectortitle").style.display="none";
+		/*
 		document.getElementById("supervisorteamselector").style.display="compact";
 		document.getElementById("supervisorteamselectortitle").style.display="compact";
+		*/
 		}
 	}
 
