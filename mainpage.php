@@ -55,7 +55,7 @@ function displayMessage()
 	<div class="entete">
 		<table style="width: 100%">
 			<tr>
-				<td><img src="LogoSD.png" alt="Logo SD" width="80" height="80"></td>
+				<td><img src="design/LogoSD.png" alt="Logo SD" width="80" height="80"></td>
 				<td><h1>Portail d'administration du centre d'appel</h1></td>
 			</tr>
 <?php

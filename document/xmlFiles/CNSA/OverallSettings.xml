@@ -1,26 +1,57 @@
-<?xml version="1.0"?>
 <!--
-File used to define all the global parameters
+Settings file
+Customer : CNSA
+First version : 21/04/2021
+Current version : 21/04/2021
+Author : SLIMANI El Mahdi
 -->
-<xml>
-	<branch>
-		<name>Vins</name>
-		<routepoint>911030</routepoint><!--Associated route point number-->
-		<enablegreetingprompt>false</enablegreetingprompt><!--Enable the greeting prompt-->
-		<enabledissuasionprompt>true</enabledissuasionprompt><!--Enable the dissuasion prompt-->
-		<openinghours>OpeningHours_Vins.xml</openinghours><!--Name of the opening hours file-->
-		<publicholiday>PublicHoliday_Vins.xml</publicholiday><!--Name of the public holiday file-->
-		<incomingcallsdetection>
-			<enable>true</enable>
-			<list>IncomingCallsList_Vins.xml</list><!--Name of the incoming calls list file-->
-		</incomingcallsdetection>
-		<prioritytag>PriorityTagList_Vins.xml</prioritytag><!--Name of the prioritytag file-->
-		<maxwaitingtime>60</maxwaitingtime><!--Max waiting time for this branch. It has to be a simple number-->
-		<redirecttovoicemail>true</redirecttovoicemail><!--Redirect to voicemail if closed-->
-		<maxcallqueuesize>
-			<enable>false</enable>
-			<size>10</size>
-		</maxcallqueuesize>
-		<layoutlistname>Vins_AU</layoutlistname><!--Layout list name-->
-	</branch>
-</xml>
+<topics>
+	<topic>
+		<files>
+			<codepin>Codepin.xml</codepin>
+			<daysfile>PublicHoliday.xml</daysfile>
+			<hoursfile>OpeningHours.xml</hoursfile>
+			<asthoursfile>AstHours.xml</asthoursfile>		
+		</files>
+		<prompts>
+			<welcompromptfile>welcome.wav</welcompromptfile>
+			<closureprompt>closed.wav</closureprompt>
+			<codepininitpromptfile>getpin.wav</codepininitpromptfile>
+			<codepinretrypromptfile>retrypin.wav</codepinretrypromptfile>
+			<codepinuknowpromptfile>uknowpin.wav</codepinuknowpromptfile>
+			<dissuasionpropmtfile>dissuasion.wav</dissuasionpropmtfile>
+			<astpromptfile>redirectast.wav</astpromptfile>
+			<waitingprompt>waitqueu.wav</waitingprompt>
+			<sviprompt>svi.wav</sviprompt>
+			<svi1prompt>svi1.wav</svi1prompt>
+			<svi2prompt>svi2.wav</svi2prompt>
+			<relanceprompt>relance.wav</relanceprompt>
+			<errorprompt>error.wav</errorprompt>
+			<enqueteprompt>enquete.wav</enqueteprompt>
+			<idprompt>id.wav</idprompt>
+			<xlprompt>xl.wav</xlprompt>
+			<aide1prompt>aide1.wav</aide1prompt>
+			<cadresprompt>cadres.wav</cadresprompt>
+			<aide2prompt>aide2.wav</aide2prompt>
+		</prompts>
+		<others>
+			<agentlayout>CNSA</agentlayout>
+			<fwastnumber>+33534618468</fwastnumber>
+		</others>
+		<waitingqueue>
+			<maxqueueratio>3</maxqueueratio>
+			<maxtimeinqueue>120</maxtimeinqueue>
+			<agenttimeout>15</agenttimeout>
+		</waitingqueue>
+		<csqs>
+			<csq1>CNSA_RELANCE_CSQ</csq1>
+			<csq2>CNSA_INTERNE_CSQ</csq2>
+			<csq3>CNSA_EXTERNE_CSQ</csq3>
+			<csq4>CNSA_CA_CSQ</csq4>
+			<csq5>CNSA_ERRD_CSQ</csq5>
+			<incomingcallscsq>CNSA_Incoming_STAT</incomingcallscsq>
+			<forwardedtoastcsq>CNSA_ForwardedToAST_STAT</forwardedtoastcsq>
+			<closurecsq>CNSA_Closed_STAT</closurecsq>
+		</csqs>
+	</topic>
+</topics>

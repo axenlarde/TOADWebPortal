@@ -30,10 +30,10 @@ function selectAll()
 	{
 	var list = document.getElementById('AssignedList');
 	for (var i = 0; i < list.options.length; i++)list.options[i].selected = "true";
-    //list = document.getElementById('primarysupervisorof');
-	//for (var i = 0; i < list.options.length; i++)list.options[i].selected = "true";
-	//list = document.getElementById('secondarysupervisorof');
-	//for (var i = 0; i < list.options.length; i++)list.options[i].selected = "true";
+    list = document.getElementById('primarysupervisorof');
+	for (var i = 0; i < list.options.length; i++)list.options[i].selected = "true";
+	list = document.getElementById('secondarysupervisorof');
+	for (var i = 0; i < list.options.length; i++)list.options[i].selected = "true";
 	}
 	
 function doAssignButton(t)
@@ -268,12 +268,8 @@ function hide()
 		}
 	else
 		{
-		document.getElementById("supervisorteamselector").style.display="none";
-		document.getElementById("supervisorteamselectortitle").style.display="none";
-		/*
 		document.getElementById("supervisorteamselector").style.display="compact";
 		document.getElementById("supervisorteamselectortitle").style.display="compact";
-		*/
 		}
 	}
 
@@ -503,7 +499,7 @@ if($skillCount == 0)
 						</td>
 						<td>
 							<a href="javascript:doAssignPrimaryButton(this.form);"><</a>
-							<p><a href="javascript:doNotAssignPrimaryButton(this.form);">></a>
+							<!--<p><a href="javascript:doNotAssignPrimaryButton(this.form);">></a>-->
 						</td>
 						<td>
 							<select style=width:200px name="notAssignedTeams" id="notAssignedTeams" multiple size = "4">
@@ -569,7 +565,7 @@ if($skillCount == 0)
 					</tr>
 					<tr>
 					  <td width="40%">
-							<select size="4" style=width:250px name="AssignedList[]" id="AssignedList" tabindex="4" onchange="changeAL()" onclick="clickAL()" multiple>
+							<select size="4" style=width:300px name="AssignedList[]" id="AssignedList" tabindex="4" onchange="changeAL()" onclick="clickAL()" multiple>
 							<?php 
 							foreach($agent->skills->skill as $skill)
 								{
@@ -584,7 +580,7 @@ if($skillCount == 0)
 					<p><a href="javascript:doNotAssignButton(this.form);">></a>
 					  </td>
 					  <td width="54%">
-						<select size="4" style=width:250px name="NotAssignedList[]" id="NotAssignedList" tabindex="5" onchange="changeUAL()" onclick="clickUAL()" multiple>
+						<select size="4" style=width:300px name="NotAssignedList[]" id="NotAssignedList" tabindex="5" onchange="changeUAL()" onclick="clickUAL()" multiple>
 						<?php 
 							foreach($skillSearchResult->reply->content->skills->skill as $skill)
 								{

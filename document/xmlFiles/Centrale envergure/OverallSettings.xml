@@ -1,26 +1,36 @@
-<?xml version="1.0"?>
 <!--
-File used to define all the global parameters
+Settings file
+Customer : 
+First version : 21/04/2021
+Current version : 21/04/2021
+Author : SLIMANI El Mahdi
 -->
-<xml>
-	<branch>
-		<name>Vins</name>
-		<routepoint>911030</routepoint><!--Associated route point number-->
-		<enablegreetingprompt>false</enablegreetingprompt><!--Enable the greeting prompt-->
-		<enabledissuasionprompt>true</enabledissuasionprompt><!--Enable the dissuasion prompt-->
-		<openinghours>OpeningHours_Vins.xml</openinghours><!--Name of the opening hours file-->
-		<publicholiday>PublicHoliday_Vins.xml</publicholiday><!--Name of the public holiday file-->
-		<incomingcallsdetection>
-			<enable>true</enable>
-			<list>IncomingCallsList_Vins.xml</list><!--Name of the incoming calls list file-->
-		</incomingcallsdetection>
-		<prioritytag>PriorityTagList_Vins.xml</prioritytag><!--Name of the prioritytag file-->
-		<maxwaitingtime>60</maxwaitingtime><!--Max waiting time for this branch. It has to be a simple number-->
-		<redirecttovoicemail>true</redirecttovoicemail><!--Redirect to voicemail if closed-->
-		<maxcallqueuesize>
-			<enable>false</enable>
-			<size>10</size>
-		</maxcallqueuesize>
-		<layoutlistname>Vins_AU</layoutlistname><!--Layout list name-->
-	</branch>
-</xml>
+<topics>
+	<topic>
+		<files>
+			<daysfile>PublicHoliday.xml</daysfile>
+			<hoursfile>OpeningHours.xml</hoursfile>		
+		</files>
+		<prompts>
+			<closureprompt>msg1.wav</closureprompt>
+			<dissuasionpropmtfile>msg2.wav</dissuasionpropmtfile>
+			<waitingprompt>msg3.wav</waitingprompt>
+			<sviprompt>msg4.wav</sviprompt>
+			<mvredirectprompt>msg5.wav</mvredirectprompt>
+		</prompts>
+		<others>
+			<agentlayout>MUTUALISE</agentlayout>
+			<fwmvnumber>62219000</fwmvnumber>
+		</others>
+		<waitingqueue>
+			<maxqueueratio>2</maxqueueratio>
+			<maxtimeinqueue>120</maxtimeinqueue>
+			<holdtime>40</holdtime>
+			<agenttimeout>15</agenttimeout>
+		</waitingqueue>
+		<csqs>
+			<csq>CENTRAL_ENVERGURE_CSQ</csq>
+			<dissuasioncsq>CENTRAL_ENVERGURE_Diss_CSQ</dissuasioncsq>
+		</csqs>
+	</topic>
+</topics>

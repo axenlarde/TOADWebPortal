@@ -1,26 +1,34 @@
-<?xml version="1.0"?>
 <!--
-File used to define all the global parameters
+Settings file
+Customer : 
+First version : 21/04/2021
+Current version : 21/04/2021
+Author : SLIMANI El Mahdi
 -->
-<xml>
-	<branch>
-		<name>Vins</name>
-		<routepoint>911030</routepoint><!--Associated route point number-->
-		<enablegreetingprompt>false</enablegreetingprompt><!--Enable the greeting prompt-->
-		<enabledissuasionprompt>true</enabledissuasionprompt><!--Enable the dissuasion prompt-->
-		<openinghours>OpeningHours_Vins.xml</openinghours><!--Name of the opening hours file-->
-		<publicholiday>PublicHoliday_Vins.xml</publicholiday><!--Name of the public holiday file-->
-		<incomingcallsdetection>
-			<enable>true</enable>
-			<list>IncomingCallsList_Vins.xml</list><!--Name of the incoming calls list file-->
-		</incomingcallsdetection>
-		<prioritytag>PriorityTagList_Vins.xml</prioritytag><!--Name of the prioritytag file-->
-		<maxwaitingtime>60</maxwaitingtime><!--Max waiting time for this branch. It has to be a simple number-->
-		<redirecttovoicemail>true</redirecttovoicemail><!--Redirect to voicemail if closed-->
-		<maxcallqueuesize>
-			<enable>false</enable>
-			<size>10</size>
-		</maxcallqueuesize>
-		<layoutlistname>Vins_AU</layoutlistname><!--Layout list name-->
-	</branch>
-</xml>
+<topics>
+	<topic>
+		<files>
+			<daysfile>PublicHoliday.xml</daysfile>
+			<hoursfile>OpeningHours.xml</hoursfile>		
+		</files>
+		<prompts>
+			<welcomeprompt>msg1.wav</welcomeprompt>
+			<dissuasionpropmtfile>msg2.wav</dissuasionpropmtfile>
+			<waitingprompt>msg3.wav</waitingprompt>
+		</prompts>
+		<others>
+			<agentlayout>RTE</agentlayout>
+			<fwmvnumber>61282056</fwmvnumber>
+		</others>
+		<waitingqueue>
+			<maxqueueratio>2</maxqueueratio>
+			<maxtimeinqueue>630</maxtimeinqueue>
+			<holdtime>600</holdtime>
+			<agenttimeout>20</agenttimeout>
+		</waitingqueue>
+		<csqs>
+			<csq>RTE_HO_CSQ</csq>
+			<dissuasioncsq>RTE_HO_Diss_CSQ</dissuasioncsq>
+		</csqs>
+	</topic>
+</topics>
