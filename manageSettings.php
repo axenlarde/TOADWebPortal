@@ -50,14 +50,21 @@ $SFile = simplexml_load_file("document/xmlFiles/".$SFileName) or die("Error");
 	<table>
 		<tr>
 			<td>Temps d'attente maximum : </td>
-			<td><b><?php echo intval($SFile->branch->maxwaitingtime)?></b> secondes</td>
+			<td><b><?php echo intval($SFile->topic->waitingqueue->maxtimeinqueue)?></b> secondes</td>
 			<td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</td>
 			<td>Nouvelle valeur : </td>
 			<td><select name="maxwaitingtime" id="maxwaitingtime">
 				<?php
 				for($i=10; $i<=300; $i+=5)
 					{
-					echo "<option value=\"".$i."\">".$i."</option>";
+					if(strcmp((String)$i,$SFile->topic->waitingqueue->maxtimeinqueue) == 0)
+						{
+						echo '<option value="'.$i.'" selected="selected">'.$i.'</option>';
+						}
+					else
+						{
+						echo '<option value="'.$i.'">'.$i.'</option>';
+						}
 					}
 				?>
 			</select></td>

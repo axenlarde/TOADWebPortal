@@ -86,7 +86,7 @@ $OHFile = simplexml_load_file("document/xmlFiles/".$OHFileName) or die("Error");
 		$tabEnd2 = explode(":", $end2);
 		$end2 = $tabEnd2[0].":".$tabEnd2[1];
 		
-		if($start1 == "00:00")
+		if(($start1 == "00:00") && ($end1 == "00:00") && ($start2 == "00:00") && ($end2 == "00:00"))
 			{
 			echo "<tr><td><b>".$dayNames[$j]."</b> : </td><td>Fermé</td>";
 			}

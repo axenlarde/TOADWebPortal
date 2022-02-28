@@ -24,7 +24,9 @@ html,body
 	{
 	height: 130px;
 	padding: 10px;
-	background-color: #18a0b2;
+	/*background-color: #18a0b2;*/
+	background-color: #afbace;
+	
 	}
 	
 .entete h1

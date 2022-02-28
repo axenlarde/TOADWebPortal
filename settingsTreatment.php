@@ -22,7 +22,7 @@ else
 if(isset($_POST['maxwaitingtime']))
 	{
 	$maxwaitingtime = $_POST['maxwaitingtime'];
-	$SFile->branch->maxwaitingtime = $maxwaitingtime;
+	$SFile->topic->waitingqueue->maxtimeinqueue = $maxwaitingtime;
 	$SFile->asXML("document/xmlFiles/".$SFileName);
 	}
 
